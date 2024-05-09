@@ -1,0 +1,287 @@
+openapi: 3.0.1
+info:
+  title: SeekerAPI
+  version: '1.0'
+paths:
+  /Job:
+    get:
+      tags:
+        - Job
+      parameters:
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+  /Job/retrieveJobs:
+    post:
+      tags:
+        - Job
+      responses:
+        '200':
+          description: Success
+  /Job/hide:
+    post:
+      tags:
+        - Job
+      parameters:
+        - name: jobId
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: pageLength
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Job'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '204':
+          description: No Content
+  /Job/apply:
+    post:
+      tags:
+        - Job
+      parameters:
+        - name: jobId
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: pageLength
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: page
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/Job'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '204':
+          description: No Content
+  /Job/getHiddenJobs:
+    get:
+      tags:
+        - Job
+      parameters:
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+  /Job/getAppliedJobs:
+    get:
+      tags:
+        - Job
+      parameters:
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+  /JobRequest:
+    get:
+      tags:
+        - JobRequest
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobRequest'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobRequest'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobRequest'
+  /insertRequest:
+    post:
+      tags:
+        - JobRequest
+      parameters:
+        - name: request
+          in: query
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  /ServiceState:
+    get:
+      tags:
+        - ServiceState
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ServiceState'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceState'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ServiceState'
+components:
+  schemas:
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        preview:
+          type: string
+          nullable: true
+        content:
+          type: string
+          nullable: true
+        postedDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    JobRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        text:
+          type: string
+          nullable: true
+        lastUpdateDate:
+          type: string
+          format: date-time
+      additionalProperties: false
+    ServiceState:
+      type: object
+      properties:
+        jobsCount:
+          type: integer
+          format: int32
+      additionalProperties: false

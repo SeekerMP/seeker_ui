@@ -1,0 +1,69 @@
+.job-requests-component {
+  max-height: 200px;
+  margin-left: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  .job-requests-container {
+    padding: 10px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: auto;
+    background-color: #f9f9f9;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #97989b;
+
+    .job-request {
+      border: 1px solid #cfd2d7;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: row;
+      padding: 10px;
+      box-sizing: border-box;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      background-color: white;
+    }
+  }
+
+  .job-requests-add-container {
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+      padding-left: 10px;
+    }
+
+    .job-requests-add-container-add-button {
+      width: 30px;
+      border-left: 1px solid #d8dbe3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      cursor: pointer;
+
+      &.disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      &:hover {
+        background-color: #f9f9f9;
+      }
+
+      img {
+        width: 17px;
+      }
+    }
+  }
+}
