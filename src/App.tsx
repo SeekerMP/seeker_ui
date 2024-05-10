@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.scss';
 import {JobsContainerComponent} from "./components/jobsContainerComponent";
-import {FilterApi, JobFilterType, ServiceStateApi} from "./api-clients";
+import {FilterApi, JobApi, JobFilterType, ServiceStateApi} from "./api-clients";
 import {configuration} from "./common/common-constants";
 import {serviceStateService} from "./common/serviceState";
 import {JobRequestsComponent} from "./components/jobRequestsComponent";
@@ -18,6 +18,7 @@ function App() {
     }
 
     const filterApiClient = new FilterApi(configuration);
+    const jobApiClient = new JobApi(configuration);
 
     useEffect(() => {
         const stateApiClient = new ServiceStateApi(configuration);
@@ -49,6 +50,10 @@ function App() {
         });
     }
 
+    const updateAllRequests = () => {
+        jobApiClient.jobRetrieveJobsPost().then(_=>{})
+    }
+
     return (
         <div className="App">
             <JobsContainerComponent selectJob={selectJob} selectedJobId={selectedJob?.id}/>
@@ -63,6 +68,8 @@ function App() {
                     addNewFilter={addNewFilter}
                     type={JobFilterType.NUMBER_0}
                 />
+
+                <button onClick={updateAllRequests}>Update all requests</button>
             </div>
         </div>
     );
