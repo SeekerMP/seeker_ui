@@ -3,6 +3,47 @@ info:
   title: SeekerAPI
   version: '1.0'
 paths:
+  /Filter/addFilter:
+    post:
+      tags:
+        - Filter
+      parameters:
+        - name: text
+          in: query
+          style: form
+          schema:
+            type: string
+        - name: type
+          in: query
+          style: form
+          schema:
+            $ref: '#/components/schemas/JobFilterType'
+      responses:
+        '200':
+          description: Success
+  /Filter/getAllFilters:
+    get:
+      tags:
+        - Filter
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobFilter'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobFilter'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobFilter'
   /Job:
     get:
       tags:
@@ -194,6 +235,42 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Job'
+  /Job/getImportantJobs:
+    get:
+      tags:
+        - Job
+      parameters:
+        - name: count
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+        - name: offset
+          in: query
+          style: form
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
   /JobRequest:
     get:
       tags:
@@ -265,6 +342,24 @@ components:
           type: string
           format: date-time
       additionalProperties: false
+    JobFilter:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        text:
+          type: string
+          nullable: true
+        type:
+          $ref: '#/components/schemas/JobFilterType'
+      additionalProperties: false
+    JobFilterType:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
     JobRequest:
       type: object
       properties:

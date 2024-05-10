@@ -2,8 +2,61 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { Job } from '../models/Job';
+import { JobFilter } from '../models/JobFilter';
+import { JobFilterType } from '../models/JobFilterType';
 import { JobRequest } from '../models/JobRequest';
 import { ServiceState } from '../models/ServiceState';
+import { ObservableFilterApi } from './ObservableAPI';
+
+import { FilterApiRequestFactory, FilterApiResponseProcessor} from "../apis/FilterApi";
+export class PromiseFilterApi {
+    private api: ObservableFilterApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: FilterApiRequestFactory,
+        responseProcessor?: FilterApiResponseProcessor
+    ) {
+        this.api = new ObservableFilterApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param text 
+     * @param type 
+     */
+    public filterAddFilterPostWithHttpInfo(text?: string, type?: JobFilterType, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.filterAddFilterPostWithHttpInfo(text, type, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param text 
+     * @param type 
+     */
+    public filterAddFilterPost(text?: string, type?: JobFilterType, _options?: Configuration): Promise<void> {
+        const result = this.api.filterAddFilterPost(text, type, _options);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public filterGetAllFiltersGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<JobFilter>>> {
+        const result = this.api.filterGetAllFiltersGetWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public filterGetAllFiltersGet(_options?: Configuration): Promise<Array<JobFilter>> {
+        const result = this.api.filterGetAllFiltersGet(_options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
 import { ObservableJobApi } from './ObservableAPI';
 
 import { JobApiRequestFactory, JobApiResponseProcessor} from "../apis/JobApi";
@@ -89,6 +142,24 @@ export class PromiseJobApi {
      */
     public jobGetHiddenJobsGet(count?: number, offset?: number, _options?: Configuration): Promise<Array<Job>> {
         const result = this.api.jobGetHiddenJobsGet(count, offset, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param count 
+     * @param offset 
+     */
+    public jobGetImportantJobsGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Promise<HttpInfo<Array<Job>>> {
+        const result = this.api.jobGetImportantJobsGetWithHttpInfo(count, offset, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param count 
+     * @param offset 
+     */
+    public jobGetImportantJobsGet(count?: number, offset?: number, _options?: Configuration): Promise<Array<Job>> {
+        const result = this.api.jobGetImportantJobsGet(count, offset, _options);
         return result.toPromise();
     }
 

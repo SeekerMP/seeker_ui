@@ -2,8 +2,68 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { Job } from '../models/Job';
+import { JobFilter } from '../models/JobFilter';
+import { JobFilterType } from '../models/JobFilterType';
 import { JobRequest } from '../models/JobRequest';
 import { ServiceState } from '../models/ServiceState';
+
+import { ObservableFilterApi } from "./ObservableAPI";
+import { FilterApiRequestFactory, FilterApiResponseProcessor} from "../apis/FilterApi";
+
+export interface FilterApiFilterAddFilterPostRequest {
+    /**
+     * 
+     * @type string
+     * @memberof FilterApifilterAddFilterPost
+     */
+    text?: string
+    /**
+     * 
+     * @type JobFilterType
+     * @memberof FilterApifilterAddFilterPost
+     */
+    type?: JobFilterType
+}
+
+export interface FilterApiFilterGetAllFiltersGetRequest {
+}
+
+export class ObjectFilterApi {
+    private api: ObservableFilterApi
+
+    public constructor(configuration: Configuration, requestFactory?: FilterApiRequestFactory, responseProcessor?: FilterApiResponseProcessor) {
+        this.api = new ObservableFilterApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param param the request object
+     */
+    public filterAddFilterPostWithHttpInfo(param: FilterApiFilterAddFilterPostRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.filterAddFilterPostWithHttpInfo(param.text, param.type,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public filterAddFilterPost(param: FilterApiFilterAddFilterPostRequest = {}, options?: Configuration): Promise<void> {
+        return this.api.filterAddFilterPost(param.text, param.type,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public filterGetAllFiltersGetWithHttpInfo(param: FilterApiFilterGetAllFiltersGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<JobFilter>>> {
+        return this.api.filterGetAllFiltersGetWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public filterGetAllFiltersGet(param: FilterApiFilterGetAllFiltersGetRequest = {}, options?: Configuration): Promise<Array<JobFilter>> {
+        return this.api.filterGetAllFiltersGet( options).toPromise();
+    }
+
+}
 
 import { ObservableJobApi } from "./ObservableAPI";
 import { JobApiRequestFactory, JobApiResponseProcessor} from "../apis/JobApi";
@@ -70,6 +130,21 @@ export interface JobApiJobGetHiddenJobsGetRequest {
      * 
      * @type number
      * @memberof JobApijobGetHiddenJobsGet
+     */
+    offset?: number
+}
+
+export interface JobApiJobGetImportantJobsGetRequest {
+    /**
+     * 
+     * @type number
+     * @memberof JobApijobGetImportantJobsGet
+     */
+    count?: number
+    /**
+     * 
+     * @type number
+     * @memberof JobApijobGetImportantJobsGet
      */
     offset?: number
 }
@@ -159,6 +234,20 @@ export class ObjectJobApi {
      */
     public jobGetHiddenJobsGet(param: JobApiJobGetHiddenJobsGetRequest = {}, options?: Configuration): Promise<Array<Job>> {
         return this.api.jobGetHiddenJobsGet(param.count, param.offset,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public jobGetImportantJobsGetWithHttpInfo(param: JobApiJobGetImportantJobsGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<Job>>> {
+        return this.api.jobGetImportantJobsGetWithHttpInfo(param.count, param.offset,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public jobGetImportantJobsGet(param: JobApiJobGetImportantJobsGetRequest = {}, options?: Configuration): Promise<Array<Job>> {
+        return this.api.jobGetImportantJobsGet(param.count, param.offset,  options).toPromise();
     }
 
     /**

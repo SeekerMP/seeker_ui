@@ -59,6 +59,16 @@
           box-shadow: 0 0 5px 0 #cb1245;
         }
       }
+
+      &.important-button {
+        background-color: #f7fdb8;
+        border: 1px solid #f7fdb8;
+
+        &.selected {
+          border-color: #b7bc82;
+          box-shadow: 0 0 5px 0 #b7bc82;
+        }
+      }
     }
   }
 }

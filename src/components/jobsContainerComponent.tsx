@@ -28,6 +28,9 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
             case 3:
                 api.jobGetHiddenJobsGet(21, (page - 1) * 20).then((values) => handleJobFetch(page, values, onLoadPage));
                 break;
+            case 4:
+                api.jobGetImportantJobsGet(21, (page - 1) * 20).then((values) => handleJobFetch(page, values, onLoadPage));
+                break;
             default:
                 api.jobGet(21, (page - 1) * 20).then((values) => handleJobFetch(page, values, onLoadPage));
         }
@@ -117,23 +120,36 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
         <div className="jobs-container component-card">
             <div className="filters-container">
                 <div
-                    className={ `filter-button not-applied-button ${ selectedFilter === 1 ? 'selected' : '' }` }
-                    onClick={ () => { onFilterSelected(1) }}>
+                    className={`filter-button not-applied-button ${selectedFilter === 1 ? 'selected' : ''}`}
+                    onClick={() => {
+                        onFilterSelected(1)
+                    }}>
                     not applied
                 </div>
                 <div
-                    className={ `filter-button applied-button  ${ selectedFilter === 2 ? 'selected' : '' }` }
-                    onClick={ () => { onFilterSelected(2) }}>
+                    className={`filter-button applied-button  ${selectedFilter === 2 ? 'selected' : ''}`}
+                    onClick={() => {
+                        onFilterSelected(2)
+                    }}>
                     applied
                 </div>
                 <div
-                    className={ `filter-button hidden-button  ${ selectedFilter === 3 ? 'selected' : '' }`}
-                    onClick={ () => { onFilterSelected(3) }}>
+                    className={`filter-button hidden-button  ${selectedFilter === 3 ? 'selected' : ''}`}
+                    onClick={() => {
+                        onFilterSelected(3)
+                    }}>
                     hidden
+                </div>
+                <div
+                    className={`filter-button important-button  ${selectedFilter === 4 ? 'selected' : ''}`}
+                    onClick={() => {
+                        onFilterSelected(4)
+                    }}>
+                    important
                 </div>
             </div>
             <div ref={jobsContainerRef} className="jobs-container-list">
-                { jobsRepresentation }
+                {jobsRepresentation}
             </div>
             <PaginatorComponent
                 pageCount={Math.round(serviceStateService.jobsCount / 20)}

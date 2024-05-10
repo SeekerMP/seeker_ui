@@ -1,7 +1,7 @@
 .job-requests-component {
   max-height: 200px;
   margin-left: 10px;
-  width: 100%;
+  width: calc(100% - 10px);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

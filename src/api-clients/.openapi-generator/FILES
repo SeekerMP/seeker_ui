@@ -1,9 +1,11 @@
 .gitignore
 .openapi-generator-ignore
+FilterApi.md
 JobApi.md
 JobRequestApi.md
 README.md
 ServiceStateApi.md
+apis/FilterApi.ts
 apis/JobApi.ts
 apis/JobRequestApi.ts
 apis/ServiceStateApi.ts
@@ -17,6 +19,8 @@ http/isomorphic-fetch.ts
 index.ts
 middleware.ts
 models/Job.ts
+models/JobFilter.ts
+models/JobFilterType.ts
 models/JobRequest.ts
 models/ObjectSerializer.ts
 models/ServiceState.ts
