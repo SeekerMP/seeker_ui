@@ -3,7 +3,6 @@ import { Configuration} from '../configuration'
 
 import { Job } from '../models/Job';
 import { JobFilter } from '../models/JobFilter';
-import { JobFilterType } from '../models/JobFilterType';
 import { JobRequest } from '../models/JobRequest';
 import { ServiceState } from '../models/ServiceState';
 import { ObservableFilterApi } from './ObservableAPI';
@@ -24,7 +23,7 @@ export class PromiseFilterApi {
      * @param text 
      * @param type 
      */
-    public filterAddFilterPostWithHttpInfo(text?: string, type?: JobFilterType, _options?: Configuration): Promise<HttpInfo<void>> {
+    public filterAddFilterPostWithHttpInfo(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<HttpInfo<void>> {
         const result = this.api.filterAddFilterPostWithHttpInfo(text, type, _options);
         return result.toPromise();
     }
@@ -33,7 +32,7 @@ export class PromiseFilterApi {
      * @param text 
      * @param type 
      */
-    public filterAddFilterPost(text?: string, type?: JobFilterType, _options?: Configuration): Promise<void> {
+    public filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<void> {
         const result = this.api.filterAddFilterPost(text, type, _options);
         return result.toPromise();
     }
@@ -94,72 +93,20 @@ export class PromiseJobApi {
     /**
      * @param count 
      * @param offset 
+     * @param filter 
      */
-    public jobGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        const result = this.api.jobGetWithHttpInfo(count, offset, _options);
+    public jobGetWithHttpInfo(count?: number, offset?: number, filter?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<HttpInfo<Array<Job>>> {
+        const result = this.api.jobGetWithHttpInfo(count, offset, filter, _options);
         return result.toPromise();
     }
 
     /**
      * @param count 
      * @param offset 
+     * @param filter 
      */
-    public jobGet(count?: number, offset?: number, _options?: Configuration): Promise<Array<Job>> {
-        const result = this.api.jobGet(count, offset, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetAppliedJobsGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        const result = this.api.jobGetAppliedJobsGetWithHttpInfo(count, offset, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetAppliedJobsGet(count?: number, offset?: number, _options?: Configuration): Promise<Array<Job>> {
-        const result = this.api.jobGetAppliedJobsGet(count, offset, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetHiddenJobsGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        const result = this.api.jobGetHiddenJobsGetWithHttpInfo(count, offset, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetHiddenJobsGet(count?: number, offset?: number, _options?: Configuration): Promise<Array<Job>> {
-        const result = this.api.jobGetHiddenJobsGet(count, offset, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetImportantJobsGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        const result = this.api.jobGetImportantJobsGetWithHttpInfo(count, offset, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetImportantJobsGet(count?: number, offset?: number, _options?: Configuration): Promise<Array<Job>> {
-        const result = this.api.jobGetImportantJobsGet(count, offset, _options);
+    public jobGet(count?: number, offset?: number, filter?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<Array<Job>> {
+        const result = this.api.jobGet(count, offset, filter, _options);
         return result.toPromise();
     }
 

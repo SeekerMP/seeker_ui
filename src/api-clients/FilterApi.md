@@ -25,8 +25,8 @@ const apiInstance = new .FilterApi(configuration);
 let body:.FilterApiFilterAddFilterPostRequest = {
   // string (optional)
   text: "text_example",
-  // JobFilterType (optional)
-  type: 0,
+  // 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied' (optional)
+  type: "None",
 };
 
 apiInstance.filterAddFilterPost(body).then((data:any) => {
@@ -40,7 +40,7 @@ apiInstance.filterAddFilterPost(body).then((data:any) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **text** | [**string**] |  | (optional) defaults to undefined
- **type** | **JobFilterType** |  | (optional) defaults to undefined
+ **type** | [**&#39;None&#39; | &#39;Important&#39; | &#39;AutoIgnore&#39; | &#39;Hidden&#39; | &#39;Applied&#39;**]**Array<&#39;None&#39; &#124; &#39;Important&#39; &#124; &#39;AutoIgnore&#39; &#124; &#39;Hidden&#39; &#124; &#39;Applied&#39;>** |  | (optional) defaults to undefined
 
 
 ### Return type

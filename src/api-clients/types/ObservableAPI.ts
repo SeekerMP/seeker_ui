@@ -4,7 +4,6 @@ import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { Job } from '../models/Job';
 import { JobFilter } from '../models/JobFilter';
-import { JobFilterType } from '../models/JobFilterType';
 import { JobRequest } from '../models/JobRequest';
 import { ServiceState } from '../models/ServiceState';
 
@@ -28,7 +27,7 @@ export class ObservableFilterApi {
      * @param text 
      * @param type 
      */
-    public filterAddFilterPostWithHttpInfo(text?: string, type?: JobFilterType, _options?: Configuration): Observable<HttpInfo<void>> {
+    public filterAddFilterPostWithHttpInfo(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Observable<HttpInfo<void>> {
         const requestContextPromise = this.requestFactory.filterAddFilterPost(text, type, _options);
 
         // build promise chain
@@ -51,7 +50,7 @@ export class ObservableFilterApi {
      * @param text 
      * @param type 
      */
-    public filterAddFilterPost(text?: string, type?: JobFilterType, _options?: Configuration): Observable<void> {
+    public filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Observable<void> {
         return this.filterAddFilterPostWithHttpInfo(text, type, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
     }
 
@@ -136,9 +135,10 @@ export class ObservableJobApi {
     /**
      * @param count 
      * @param offset 
+     * @param filter 
      */
-    public jobGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Observable<HttpInfo<Array<Job>>> {
-        const requestContextPromise = this.requestFactory.jobGet(count, offset, _options);
+    public jobGetWithHttpInfo(count?: number, offset?: number, filter?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Observable<HttpInfo<Array<Job>>> {
+        const requestContextPromise = this.requestFactory.jobGet(count, offset, filter, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -159,102 +159,10 @@ export class ObservableJobApi {
     /**
      * @param count 
      * @param offset 
+     * @param filter 
      */
-    public jobGet(count?: number, offset?: number, _options?: Configuration): Observable<Array<Job>> {
-        return this.jobGetWithHttpInfo(count, offset, _options).pipe(map((apiResponse: HttpInfo<Array<Job>>) => apiResponse.data));
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetAppliedJobsGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Observable<HttpInfo<Array<Job>>> {
-        const requestContextPromise = this.requestFactory.jobGetAppliedJobsGet(count, offset, _options);
-
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (let middleware of this.configuration.middleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (let middleware of this.configuration.middleware) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.jobGetAppliedJobsGetWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetAppliedJobsGet(count?: number, offset?: number, _options?: Configuration): Observable<Array<Job>> {
-        return this.jobGetAppliedJobsGetWithHttpInfo(count, offset, _options).pipe(map((apiResponse: HttpInfo<Array<Job>>) => apiResponse.data));
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetHiddenJobsGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Observable<HttpInfo<Array<Job>>> {
-        const requestContextPromise = this.requestFactory.jobGetHiddenJobsGet(count, offset, _options);
-
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (let middleware of this.configuration.middleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (let middleware of this.configuration.middleware) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.jobGetHiddenJobsGetWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetHiddenJobsGet(count?: number, offset?: number, _options?: Configuration): Observable<Array<Job>> {
-        return this.jobGetHiddenJobsGetWithHttpInfo(count, offset, _options).pipe(map((apiResponse: HttpInfo<Array<Job>>) => apiResponse.data));
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetImportantJobsGetWithHttpInfo(count?: number, offset?: number, _options?: Configuration): Observable<HttpInfo<Array<Job>>> {
-        const requestContextPromise = this.requestFactory.jobGetImportantJobsGet(count, offset, _options);
-
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (let middleware of this.configuration.middleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (let middleware of this.configuration.middleware) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.jobGetImportantJobsGetWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     * @param count 
-     * @param offset 
-     */
-    public jobGetImportantJobsGet(count?: number, offset?: number, _options?: Configuration): Observable<Array<Job>> {
-        return this.jobGetImportantJobsGetWithHttpInfo(count, offset, _options).pipe(map((apiResponse: HttpInfo<Array<Job>>) => apiResponse.data));
+    public jobGet(count?: number, offset?: number, filter?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Observable<Array<Job>> {
+        return this.jobGetWithHttpInfo(count, offset, filter, _options).pipe(map((apiResponse: HttpInfo<Array<Job>>) => apiResponse.data));
     }
 
     /**

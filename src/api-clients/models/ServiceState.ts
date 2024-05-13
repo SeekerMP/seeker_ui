@@ -14,6 +14,7 @@ import { HttpFile } from '../http/http';
 
 export class ServiceState {
     'jobsCount'?: number;
+    'retrieveInProgress'?: boolean;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -23,6 +24,12 @@ export class ServiceState {
             "baseName": "jobsCount",
             "type": "number",
             "format": "int32"
+        },
+        {
+            "name": "retrieveInProgress",
+            "baseName": "retrieveInProgress",
+            "type": "boolean",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {

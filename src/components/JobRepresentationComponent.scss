@@ -7,5 +7,12 @@
   .job-representation-content {
     overflow: auto;
     height: 100%;
+
+    .filtered-text {
+      background-color: green;
+      color: white;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
   }
 }

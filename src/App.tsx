@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.scss';
 import {JobsContainerComponent} from "./components/jobsContainerComponent";
-import {FilterApi, JobApi, JobFilterType, ServiceStateApi} from "./api-clients";
+import {FilterApi, JobApi, JobFilterTypeEnum, ServiceStateApi} from "./api-clients";
 import {configuration} from "./common/common-constants";
 import {serviceStateService} from "./common/serviceState";
 import {JobRequestsComponent} from "./components/jobRequestsComponent";
@@ -12,6 +12,7 @@ import {FilterComponent} from "./components/filterComponent";
 function App() {
     const [selectedJob, setSelectedJob] = useState<LocalSeekJob | undefined>(undefined);
     const [importantFilters, setImportantFilters] = useState<string[]>([]);
+    const [ignoredFilters, setIgnoredFilters] = useState<string[]>([]);
 
     const selectJob = (job: LocalSeekJob | undefined) => {
         setSelectedJob(job);
@@ -28,25 +29,45 @@ function App() {
         });
 
         filterApiClient.filterGetAllFiltersGet().then(filters => {
-            const importantFilters: string[] = [];
+            const imFilters: string[] = [];
+            const igFilters: string[] = [];
 
             filters.forEach(filter => {
                 switch (filter.type) {
-                    case JobFilterType.NUMBER_0:
-                        importantFilters.push(filter.text ?? '');
+                    case JobFilterTypeEnum.Important:
+                        imFilters.push(filter.text ?? '');
+                        break;
+                    case JobFilterTypeEnum.AutoIgnore:
+                        igFilters.push(filter.text ?? '');
+                        break;
                 }
             })
 
-            setImportantFilters(importantFilters);
+            setImportantFilters(imFilters);
+            setIgnoredFilters(igFilters);
         });
     },[]);
 
-    const addNewFilter = (text: string, type: JobFilterType) => {
-        filterApiClient.filterAddFilterPost(text, type).then(_ => {
-           const filters = Object.assign([], importantFilters);
-           filters.push(text);
+    const hideJobDetails = () => setSelectedJob(undefined);
 
-           setImportantFilters(filters);
+    const addNewFilter = (text: string, type: JobFilterTypeEnum) => {
+        filterApiClient.filterAddFilterPost(text, type).then(_ => {
+            switch(type) {
+                case JobFilterTypeEnum.Important:
+                    const imFilters = Object.assign([], importantFilters);
+                    imFilters.push(text);
+
+                    setImportantFilters(imFilters);
+
+                    break;
+                case JobFilterTypeEnum.AutoIgnore:
+                    const igFilters = Object.assign([], ignoredFilters);
+                    igFilters.push(text);
+
+                    setIgnoredFilters(igFilters);
+
+                    break;
+            }
         });
     }
 
@@ -56,7 +77,11 @@ function App() {
 
     return (
         <div className="App">
-            <JobsContainerComponent selectJob={selectJob} selectedJobId={selectedJob?.id}/>
+            <JobsContainerComponent
+                selectJob={selectJob}
+                selectedJobId={selectedJob?.id}
+                hideJobDetails={hideJobDetails}
+            />
             <div className="right-panel">
                 <JobRequestsComponent />
                 <JobRepresentationComponent job={selectedJob} />
@@ -66,9 +91,14 @@ function App() {
                     filters={importantFilters}
                     title="Important"
                     addNewFilter={addNewFilter}
-                    type={JobFilterType.NUMBER_0}
+                    type={JobFilterTypeEnum.Important}
                 />
-
+                <FilterComponent
+                    filters={ignoredFilters}
+                    title="Ignore"
+                    addNewFilter={addNewFilter}
+                    type={JobFilterTypeEnum.AutoIgnore}
+                />
                 <button onClick={updateAllRequests}>Update all requests</button>
             </div>
         </div>

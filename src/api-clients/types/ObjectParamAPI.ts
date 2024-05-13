@@ -3,7 +3,6 @@ import { Configuration} from '../configuration'
 
 import { Job } from '../models/Job';
 import { JobFilter } from '../models/JobFilter';
-import { JobFilterType } from '../models/JobFilterType';
 import { JobRequest } from '../models/JobRequest';
 import { ServiceState } from '../models/ServiceState';
 
@@ -19,10 +18,10 @@ export interface FilterApiFilterAddFilterPostRequest {
     text?: string
     /**
      * 
-     * @type JobFilterType
+     * @type &#39;None&#39; | &#39;Important&#39; | &#39;AutoIgnore&#39; | &#39;Hidden&#39; | &#39;Applied&#39;
      * @memberof FilterApifilterAddFilterPost
      */
-    type?: JobFilterType
+    type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied'
 }
 
 export interface FilterApiFilterGetAllFiltersGetRequest {
@@ -102,51 +101,12 @@ export interface JobApiJobGetRequest {
      * @memberof JobApijobGet
      */
     offset?: number
-}
-
-export interface JobApiJobGetAppliedJobsGetRequest {
     /**
      * 
-     * @type number
-     * @memberof JobApijobGetAppliedJobsGet
+     * @type &#39;None&#39; | &#39;Important&#39; | &#39;AutoIgnore&#39; | &#39;Hidden&#39; | &#39;Applied&#39;
+     * @memberof JobApijobGet
      */
-    count?: number
-    /**
-     * 
-     * @type number
-     * @memberof JobApijobGetAppliedJobsGet
-     */
-    offset?: number
-}
-
-export interface JobApiJobGetHiddenJobsGetRequest {
-    /**
-     * 
-     * @type number
-     * @memberof JobApijobGetHiddenJobsGet
-     */
-    count?: number
-    /**
-     * 
-     * @type number
-     * @memberof JobApijobGetHiddenJobsGet
-     */
-    offset?: number
-}
-
-export interface JobApiJobGetImportantJobsGetRequest {
-    /**
-     * 
-     * @type number
-     * @memberof JobApijobGetImportantJobsGet
-     */
-    count?: number
-    /**
-     * 
-     * @type number
-     * @memberof JobApijobGetImportantJobsGet
-     */
-    offset?: number
+    filter?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied'
 }
 
 export interface JobApiJobHidePostRequest {
@@ -198,56 +158,14 @@ export class ObjectJobApi {
      * @param param the request object
      */
     public jobGetWithHttpInfo(param: JobApiJobGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        return this.api.jobGetWithHttpInfo(param.count, param.offset,  options).toPromise();
+        return this.api.jobGetWithHttpInfo(param.count, param.offset, param.filter,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public jobGet(param: JobApiJobGetRequest = {}, options?: Configuration): Promise<Array<Job>> {
-        return this.api.jobGet(param.count, param.offset,  options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public jobGetAppliedJobsGetWithHttpInfo(param: JobApiJobGetAppliedJobsGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        return this.api.jobGetAppliedJobsGetWithHttpInfo(param.count, param.offset,  options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public jobGetAppliedJobsGet(param: JobApiJobGetAppliedJobsGetRequest = {}, options?: Configuration): Promise<Array<Job>> {
-        return this.api.jobGetAppliedJobsGet(param.count, param.offset,  options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public jobGetHiddenJobsGetWithHttpInfo(param: JobApiJobGetHiddenJobsGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        return this.api.jobGetHiddenJobsGetWithHttpInfo(param.count, param.offset,  options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public jobGetHiddenJobsGet(param: JobApiJobGetHiddenJobsGetRequest = {}, options?: Configuration): Promise<Array<Job>> {
-        return this.api.jobGetHiddenJobsGet(param.count, param.offset,  options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public jobGetImportantJobsGetWithHttpInfo(param: JobApiJobGetImportantJobsGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<Job>>> {
-        return this.api.jobGetImportantJobsGetWithHttpInfo(param.count, param.offset,  options).toPromise();
-    }
-
-    /**
-     * @param param the request object
-     */
-    public jobGetImportantJobsGet(param: JobApiJobGetImportantJobsGetRequest = {}, options?: Configuration): Promise<Array<Job>> {
-        return this.api.jobGetImportantJobsGet(param.count, param.offset,  options).toPromise();
+        return this.api.jobGet(param.count, param.offset, param.filter,  options).toPromise();
     }
 
     /**

@@ -51,12 +51,12 @@
       }
 
       &.hidden-button {
-        background-color: #fdb8cb;
-        border: 1px solid #fdb8cb;
+        background-color: #bcb8fd;
+        border: 1px solid #bcb8fd;
 
         &.selected {
-          border-color: #cb1245;
-          box-shadow: 0 0 5px 0 #cb1245;
+          border-color: #3a2eff;
+          box-shadow: 0 0 5px 0 #3a2eff;
         }
       }
 
@@ -67,6 +67,16 @@
         &.selected {
           border-color: #b7bc82;
           box-shadow: 0 0 5px 0 #b7bc82;
+        }
+      }
+
+      &.ignored-button {
+        background-color: #fdb8cb;
+        border: 1px solid #fdb8cb;
+
+        &.selected {
+          border-color: #cb1245;
+          box-shadow: 0 0 5px 0 #cb1245;
         }
       }
     }

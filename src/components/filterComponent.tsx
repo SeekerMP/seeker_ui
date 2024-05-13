@@ -1,13 +1,13 @@
 import './filterComponent.scss';
 import plusIcon from "Assets/plus.svg";
 import React, {useState} from "react";
-import {JobFilterType} from "../api-clients";
+import {JobFilterTypeEnum} from "../api-clients";
 
 type FilterComponentProps = {
     filters: string[],
     title: string,
-    type: JobFilterType,
-    addNewFilter: (text: string, type: JobFilterType) => void
+    type: JobFilterTypeEnum,
+    addNewFilter: (text: string, type: JobFilterTypeEnum) => void
 }
 
 export const FilterComponent = (props: FilterComponentProps) => {

@@ -10,13 +10,12 @@
  * Do not edit the class manually.
  */
 
-import { JobFilterType } from '../models/JobFilterType';
 import { HttpFile } from '../http/http';
 
 export class JobFilter {
     'id'?: number;
     'text'?: string | null;
-    'type'?: JobFilterType;
+    'type'?: JobFilterTypeEnum;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -36,7 +35,7 @@ export class JobFilter {
         {
             "name": "type",
             "baseName": "type",
-            "type": "JobFilterType",
+            "type": "JobFilterTypeEnum",
             "format": ""
         }    ];
 
@@ -49,4 +48,11 @@ export class JobFilter {
 }
 
 
+export enum JobFilterTypeEnum {
+    None = 'None',
+    Important = 'Important',
+    AutoIgnore = 'AutoIgnore',
+    Hidden = 'Hidden',
+    Applied = 'Applied'
+}
 

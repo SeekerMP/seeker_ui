@@ -17,7 +17,13 @@ paths:
           in: query
           style: form
           schema:
-            $ref: '#/components/schemas/JobFilterType'
+            enum:
+              - None
+              - Important
+              - AutoIgnore
+              - Hidden
+              - Applied
+            type: string
       responses:
         '200':
           description: Success
@@ -61,6 +67,17 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: filter
+          in: query
+          style: form
+          schema:
+            enum:
+              - None
+              - Important
+              - AutoIgnore
+              - Hidden
+              - Applied
+            type: string
       responses:
         '200':
           description: Success
@@ -163,114 +180,6 @@ paths:
                 $ref: '#/components/schemas/Job'
         '204':
           description: No Content
-  /Job/getHiddenJobs:
-    get:
-      tags:
-        - Job
-      parameters:
-        - name: count
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-        - name: offset
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-  /Job/getAppliedJobs:
-    get:
-      tags:
-        - Job
-      parameters:
-        - name: count
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-        - name: offset
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-  /Job/getImportantJobs:
-    get:
-      tags:
-        - Job
-      parameters:
-        - name: count
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-        - name: offset
-          in: query
-          style: form
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: Success
-          content:
-            text/plain:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-            text/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
   /JobRequest:
     get:
       tags:
@@ -352,14 +261,14 @@ components:
           type: string
           nullable: true
         type:
-          $ref: '#/components/schemas/JobFilterType'
+          enum:
+            - None
+            - Important
+            - AutoIgnore
+            - Hidden
+            - Applied
+          type: string
       additionalProperties: false
-    JobFilterType:
-      enum:
-        - 0
-        - 1
-      type: integer
-      format: int32
     JobRequest:
       type: object
       properties:
@@ -379,4 +288,6 @@ components:
         jobsCount:
           type: integer
           format: int32
+        retrieveInProgress:
+          type: boolean
       additionalProperties: false

@@ -9,7 +9,6 @@ import {SecurityAuthentication} from '../auth/auth';
 
 
 import { JobFilter } from '../models/JobFilter';
-import { JobFilterType } from '../models/JobFilterType';
 
 /**
  * no description
@@ -20,7 +19,7 @@ export class FilterApiRequestFactory extends BaseAPIRequestFactory {
      * @param text 
      * @param type 
      */
-    public async filterAddFilterPost(text?: string, type?: JobFilterType, _options?: Configuration): Promise<RequestContext> {
+    public async filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
 
@@ -39,7 +38,7 @@ export class FilterApiRequestFactory extends BaseAPIRequestFactory {
 
         // Query Params
         if (type !== undefined) {
-            requestContext.setQueryParam("type", ObjectSerializer.serialize(type, "JobFilterType", ""));
+            requestContext.setQueryParam("type", ObjectSerializer.serialize(type, "'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied'", ""));
         }
 
 

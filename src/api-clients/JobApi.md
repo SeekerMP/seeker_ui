@@ -6,9 +6,6 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**jobApplyPost**](JobApi.md#jobApplyPost) | **POST** /Job/apply | 
 [**jobGet**](JobApi.md#jobGet) | **GET** /Job | 
-[**jobGetAppliedJobsGet**](JobApi.md#jobGetAppliedJobsGet) | **GET** /Job/getAppliedJobs | 
-[**jobGetHiddenJobsGet**](JobApi.md#jobGetHiddenJobsGet) | **GET** /Job/getHiddenJobs | 
-[**jobGetImportantJobsGet**](JobApi.md#jobGetImportantJobsGet) | **GET** /Job/getImportantJobs | 
 [**jobHidePost**](JobApi.md#jobHidePost) | **POST** /Job/hide | 
 [**jobRetrieveJobsPost**](JobApi.md#jobRetrieveJobsPost) | **POST** /Job/retrieveJobs | 
 
@@ -92,6 +89,8 @@ let body:.JobApiJobGetRequest = {
   count: 1,
   // number (optional)
   offset: 1,
+  // 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied' (optional)
+  filter: "None",
 };
 
 apiInstance.jobGet(body).then((data:any) => {
@@ -106,174 +105,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **count** | [**number**] |  | (optional) defaults to undefined
  **offset** | [**number**] |  | (optional) defaults to undefined
-
-
-### Return type
-
-**Array<Job>**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **jobGetAppliedJobsGet**
-> Array<Job> jobGetAppliedJobsGet()
-
-
-### Example
-
-
-```typescript
-import {  } from '';
-import * as fs from 'fs';
-
-const configuration = .createConfiguration();
-const apiInstance = new .JobApi(configuration);
-
-let body:.JobApiJobGetAppliedJobsGetRequest = {
-  // number (optional)
-  count: 1,
-  // number (optional)
-  offset: 1,
-};
-
-apiInstance.jobGetAppliedJobsGet(body).then((data:any) => {
-  console.log('API called successfully. Returned data: ' + data);
-}).catch((error:any) => console.error(error));
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **count** | [**number**] |  | (optional) defaults to undefined
- **offset** | [**number**] |  | (optional) defaults to undefined
-
-
-### Return type
-
-**Array<Job>**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **jobGetHiddenJobsGet**
-> Array<Job> jobGetHiddenJobsGet()
-
-
-### Example
-
-
-```typescript
-import {  } from '';
-import * as fs from 'fs';
-
-const configuration = .createConfiguration();
-const apiInstance = new .JobApi(configuration);
-
-let body:.JobApiJobGetHiddenJobsGetRequest = {
-  // number (optional)
-  count: 1,
-  // number (optional)
-  offset: 1,
-};
-
-apiInstance.jobGetHiddenJobsGet(body).then((data:any) => {
-  console.log('API called successfully. Returned data: ' + data);
-}).catch((error:any) => console.error(error));
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **count** | [**number**] |  | (optional) defaults to undefined
- **offset** | [**number**] |  | (optional) defaults to undefined
-
-
-### Return type
-
-**Array<Job>**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Success |  -  |
-
-[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
-
-# **jobGetImportantJobsGet**
-> Array<Job> jobGetImportantJobsGet()
-
-
-### Example
-
-
-```typescript
-import {  } from '';
-import * as fs from 'fs';
-
-const configuration = .createConfiguration();
-const apiInstance = new .JobApi(configuration);
-
-let body:.JobApiJobGetImportantJobsGetRequest = {
-  // number (optional)
-  count: 1,
-  // number (optional)
-  offset: 1,
-};
-
-apiInstance.jobGetImportantJobsGet(body).then((data:any) => {
-  console.log('API called successfully. Returned data: ' + data);
-}).catch((error:any) => console.error(error));
-```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **count** | [**number**] |  | (optional) defaults to undefined
- **offset** | [**number**] |  | (optional) defaults to undefined
+ **filter** | [**&#39;None&#39; | &#39;Important&#39; | &#39;AutoIgnore&#39; | &#39;Hidden&#39; | &#39;Applied&#39;**]**Array<&#39;None&#39; &#124; &#39;Important&#39; &#124; &#39;AutoIgnore&#39; &#124; &#39;Hidden&#39; &#124; &#39;Applied&#39;>** |  | (optional) defaults to undefined
 
 
 ### Return type

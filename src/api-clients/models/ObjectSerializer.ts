@@ -1,12 +1,10 @@
 export * from '../models/Job';
 export * from '../models/JobFilter';
-export * from '../models/JobFilterType';
 export * from '../models/JobRequest';
 export * from '../models/ServiceState';
 
 import { Job } from '../models/Job';
-import { JobFilter    } from '../models/JobFilter';
-import { JobFilterType } from '../models/JobFilterType';
+import { JobFilter  , JobFilterTypeEnum   } from '../models/JobFilter';
 import { JobRequest } from '../models/JobRequest';
 import { ServiceState } from '../models/ServiceState';
 
@@ -23,7 +21,7 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
-    "JobFilterType",
+    "JobFilterTypeEnum",
 ]);
 
 let typeMap: {[index: string]: any} = {

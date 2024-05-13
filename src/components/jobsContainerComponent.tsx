@@ -1,4 +1,4 @@
-import {Job, JobApi} from "../api-clients";
+import {Job, JobApi, JobFilterTypeEnum} from "../api-clients";
 import {LocalSeekJob} from "../models/LocalSeekJob";
 import {useEffect, useRef, useState} from "react";
 import {JobComponent} from "./jobComponent";
@@ -9,7 +9,8 @@ import {serviceStateService} from "../common/serviceState";
 
 type JobsContainerProps = {
     selectJob: (job: LocalSeekJob | undefined) => void;
-    selectedJobId: number | undefined
+    selectedJobId: number | undefined,
+    hideJobDetails: () => void
 }
 
 export const JobsContainerComponent = (props: JobsContainerProps) => {
@@ -23,16 +24,19 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
     const fetchJobs = (page: number, onLoadPage?: () => void) => {
         switch (selectedFilter) {
             case 2:
-                api.jobGetAppliedJobsGet(21, (page - 1) * 20).then((values) => handleJobFetch(page, values, onLoadPage));
+                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.Applied).then((values) => handleJobFetch(page, values, onLoadPage));
                 break;
             case 3:
-                api.jobGetHiddenJobsGet(21, (page - 1) * 20).then((values) => handleJobFetch(page, values, onLoadPage));
+                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.Hidden).then((values) => handleJobFetch(page, values, onLoadPage));
                 break;
             case 4:
-                api.jobGetImportantJobsGet(21, (page - 1) * 20).then((values) => handleJobFetch(page, values, onLoadPage));
+                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.Important).then((values) => handleJobFetch(page, values, onLoadPage));
+                break;
+            case 5:
+                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.AutoIgnore).then((values) => handleJobFetch(page, values, onLoadPage));
                 break;
             default:
-                api.jobGet(21, (page - 1) * 20).then((values) => handleJobFetch(page, values, onLoadPage));
+                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.None).then((values) => handleJobFetch(page, values, onLoadPage));
         }
     }
 
@@ -49,6 +53,8 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
             behavior: 'smooth',
             top: 0
         });
+
+        props.hideJobDetails();
 
         onLoadPage?.();
     }
@@ -146,6 +152,13 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
                         onFilterSelected(4)
                     }}>
                     important
+                </div>
+                <div
+                    className={`filter-button ignored-button  ${selectedFilter === 5 ? 'selected' : ''}`}
+                    onClick={() => {
+                        onFilterSelected(5)
+                    }}>
+                    ignored
                 </div>
             </div>
             <div ref={jobsContainerRef} className="jobs-container-list">

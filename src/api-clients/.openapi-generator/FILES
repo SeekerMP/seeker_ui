@@ -20,7 +20,6 @@ index.ts
 middleware.ts
 models/Job.ts
 models/JobFilter.ts
-models/JobFilterType.ts
 models/JobRequest.ts
 models/ObjectSerializer.ts
 models/ServiceState.ts
