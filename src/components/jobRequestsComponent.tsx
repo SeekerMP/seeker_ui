@@ -34,7 +34,7 @@ export const JobRequestsComponent = () => {
     }
 
     return (
-        <div className="job-requests-component component-card">
+        <div className="job-requests-component">
             <div className="job-requests-container">
                 {jobRequests.map(request =>
                     <div key={`job-request-${request.id}`} className="job-request">
