@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './App.scss';
 import {JobsContainerComponent} from "./components/jobsContainerComponent";
-import {FilterApi, JobApi, JobFilterTypeEnum, ServiceStateApi} from "./api-clients";
+import {FilterApi, JobFilterTypeEnum, ServiceStateApi} from "./api-clients";
 import {configuration} from "./common/common-constants";
 import {serviceStateService} from "./common/serviceState";
 import {JobRequestsComponent} from "./components/jobRequestsComponent";
 import {JobRepresentationComponent} from "./components/JobRepresentationComponent";
 import {LocalSeekJob} from "./models/LocalSeekJob";
 import {FilterComponent} from "./components/filterComponent";
+import {SyncStateComponent} from "./components/syncState/syncStateComponent";
 
 function App() {
     const [selectedJob, setSelectedJob] = useState<LocalSeekJob | undefined>(undefined);
@@ -19,7 +20,6 @@ function App() {
     }
 
     const filterApiClient = new FilterApi(configuration);
-    const jobApiClient = new JobApi(configuration);
 
     useEffect(() => {
         const stateApiClient = new ServiceStateApi(configuration);
@@ -71,9 +71,7 @@ function App() {
         });
     }
 
-    const updateAllRequests = () => {
-        jobApiClient.jobRetrieveJobsPost().then(_=>{})
-    }
+
 
     return (
         <div className="App">
@@ -83,10 +81,11 @@ function App() {
                 hideJobDetails={hideJobDetails}
             />
             <div className="right-panel">
-                <JobRequestsComponent />
+                <SyncStateComponent />
                 <JobRepresentationComponent job={selectedJob} />
             </div>
             <div className="filter-panel component-card">
+                <JobRequestsComponent />
                 <FilterComponent
                     filters={importantFilters}
                     title="Important"
@@ -99,7 +98,6 @@ function App() {
                     addNewFilter={addNewFilter}
                     type={JobFilterTypeEnum.AutoIgnore}
                 />
-                <button onClick={updateAllRequests}>Update all requests</button>
             </div>
         </div>
     );

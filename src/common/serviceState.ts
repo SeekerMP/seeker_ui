@@ -1,9 +1,10 @@
-import {ServiceState as StateFromServer} from "../api-clients";
+import {SyncState} from "../api-clients";
+
 class ServiceState {
     public jobsCount: number = 0;
 
-    public init(state: StateFromServer) {
-        this.jobsCount = state.jobsCount ?? 0;
+    public init(state: SyncState) {
+        this.jobsCount = 1000;
     }
 }
 

@@ -226,13 +226,13 @@ paths:
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ServiceState'
+                $ref: '#/components/schemas/SyncState'
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceState'
+                $ref: '#/components/schemas/SyncState'
             text/json:
               schema:
-                $ref: '#/components/schemas/ServiceState'
+                $ref: '#/components/schemas/SyncState'
 components:
   schemas:
     Job:
@@ -250,6 +250,14 @@ components:
         postedDate:
           type: string
           format: date-time
+        filter:
+          enum:
+            - None
+            - Important
+            - AutoIgnore
+            - Hidden
+            - Applied
+          type: string
       additionalProperties: false
     JobFilter:
       type: object
@@ -282,12 +290,33 @@ components:
           type: string
           format: date-time
       additionalProperties: false
-    ServiceState:
+    SyncState:
       type: object
       properties:
-        jobsCount:
+        inProgress:
+          type: boolean
+        currentRequest:
+          type: string
+          nullable: true
+        progressPercentage:
           type: integer
           format: int32
-        retrieveInProgress:
-          type: boolean
+        currentPage:
+          type: integer
+          format: int32
+        currentPagePercentage:
+          type: integer
+          format: int32
+        startedAt:
+          type: string
+          format: date-time
+        uniqJobsCount:
+          type: integer
+          format: int32
+        importantCount:
+          type: integer
+          format: int32
+        autoIgnoredCount:
+          type: integer
+          format: int32
       additionalProperties: false

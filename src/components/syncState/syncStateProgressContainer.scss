@@ -1,0 +1,23 @@
+.sync-state-progress-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  .sync-state-progress-container-title-container {
+    display: flex;
+    flex-direction: column;
+
+    & :nth-child(2) {
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .sync-state-progress-container-progress-bars {
+    & :first-child {
+      margin-bottom: 5px;
+    }
+  }
+}
