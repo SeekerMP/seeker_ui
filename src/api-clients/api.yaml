@@ -84,19 +84,13 @@ paths:
           content:
             text/plain:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobRequestResponse'
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobRequestResponse'
             text/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobRequestResponse'
   /Job/retrieveJobs:
     post:
       tags:
@@ -127,21 +121,30 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: filter
+          in: query
+          style: form
+          schema:
+            enum:
+              - None
+              - Important
+              - AutoIgnore
+              - Hidden
+              - Applied
+            type: string
       responses:
         '200':
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobMoveResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobMoveResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/Job'
-        '204':
-          description: No Content
+                $ref: '#/components/schemas/JobMoveResponse'
   /Job/apply:
     post:
       tags:
@@ -165,21 +168,30 @@ paths:
           schema:
             type: integer
             format: int32
+        - name: filter
+          in: query
+          style: form
+          schema:
+            enum:
+              - None
+              - Important
+              - AutoIgnore
+              - Hidden
+              - Applied
+            type: string
       responses:
         '200':
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobMoveResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/Job'
+                $ref: '#/components/schemas/JobMoveResponse'
             text/json:
               schema:
-                $ref: '#/components/schemas/Job'
-        '204':
-          description: No Content
+                $ref: '#/components/schemas/JobMoveResponse'
   /JobRequest:
     get:
       tags:
@@ -277,6 +289,15 @@ components:
             - Applied
           type: string
       additionalProperties: false
+    JobMoveResponse:
+      type: object
+      properties:
+        job:
+          $ref: '#/components/schemas/Job'
+        fullCount:
+          type: integer
+          format: int32
+      additionalProperties: false
     JobRequest:
       type: object
       properties:
@@ -289,6 +310,18 @@ components:
         lastUpdateDate:
           type: string
           format: date-time
+      additionalProperties: false
+    JobRequestResponse:
+      type: object
+      properties:
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+          nullable: true
+        fullCount:
+          type: integer
+          format: int32
       additionalProperties: false
     SyncState:
       type: object

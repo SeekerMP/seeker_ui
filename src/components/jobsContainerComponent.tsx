@@ -1,11 +1,10 @@
-import {Job, JobApi, JobFilterTypeEnum} from "../api-clients";
+import {Job, JobApi, JobFilterTypeEnum, JobMoveResponse, JobRequestResponse} from "../api-clients";
 import {LocalSeekJob} from "../models/LocalSeekJob";
 import {useEffect, useRef, useState} from "react";
 import {JobComponent} from "./jobComponent";
 import {PaginatorComponent} from "./paginatorComponent";
 import "./jobsContainerComponent.scss";
 import {configuration} from "../common/common-constants";
-import {serviceStateService} from "../common/serviceState";
 
 type JobsContainerProps = {
     selectJob: (job: LocalSeekJob | undefined) => void;
@@ -16,36 +15,24 @@ type JobsContainerProps = {
 export const JobsContainerComponent = (props: JobsContainerProps) => {
     const [jobs, setJobs] = useState<Map<number, LocalSeekJob>>(new Map());
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [selectedFilter, setSelectedFilter] = useState<number>(1);
+    const [selectedFilter, setSelectedFilter] = useState<JobFilterTypeEnum>(JobFilterTypeEnum.None);
+    const [jobsCount, setJobsCount] = useState<number>(0);
 
     const api = new JobApi(configuration);
     const jobsContainerRef = useRef<HTMLDivElement | null>(null);
 
     const fetchJobs = (page: number, onLoadPage?: () => void) => {
-        switch (selectedFilter) {
-            case 2:
-                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.Applied).then((values) => handleJobFetch(page, values, onLoadPage));
-                break;
-            case 3:
-                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.Hidden).then((values) => handleJobFetch(page, values, onLoadPage));
-                break;
-            case 4:
-                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.Important).then((values) => handleJobFetch(page, values, onLoadPage));
-                break;
-            case 5:
-                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.AutoIgnore).then((values) => handleJobFetch(page, values, onLoadPage));
-                break;
-            default:
-                api.jobGet(21, (page - 1) * 20, JobFilterTypeEnum.None).then((values) => handleJobFetch(page, values, onLoadPage));
-        }
+        api.jobGet(21, (page - 1) * 20, selectedFilter).then(values=> handleJobFetch(page, values, onLoadPage));
     }
 
-    const handleJobFetch = (page: number, values: Job[], onLoadPage?: () => void) => {
+    const handleJobFetch = (page: number, values: JobRequestResponse, onLoadPage?: () => void) => {
         const jobsMap = new Map<number, LocalSeekJob>();
-        values.map(job => {
+
+        values.jobs?.map(job => {
             jobsMap.set(job?.id ?? -1, parseJob(job));
         });
 
+        setJobsCount(values.fullCount ?? -1);
         setJobs(jobsMap);
         setCurrentPage(page);
 
@@ -64,13 +51,13 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
     }, [selectedFilter]);
 
     const hideJob = (jobId: number) => {
-        api.jobHidePost(jobId, 21, currentPage).then((job) => {
+        api.jobHidePost(jobId, 21, currentPage, selectedFilter).then((job) => {
             hideAndShowNew(job, jobId);
         });
     }
 
     const applyForAJob = (jobId: number) => {
-        api.jobApplyPost(jobId, 21, currentPage).then((job) => {
+        api.jobApplyPost(jobId, 21, currentPage, selectedFilter).then((job) => {
             hideAndShowNew(job, jobId);
         });
     }
@@ -83,12 +70,14 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
         return parsedJob;
     }
 
-    const hideAndShowNew = (jobToShow: Job | void, jobToHideId: number) => {
+    const hideAndShowNew = (jobToShow: JobMoveResponse, jobToHideId: number) => {
         let parsedJob: LocalSeekJob | null = null;
 
-        if (jobToShow) {
-            parsedJob = parseJob(jobToShow);
+        if (jobToShow.job) {
+            parsedJob = parseJob(jobToShow.job);
         }
+
+        setJobsCount(jobToShow.fullCount ?? -1);
 
         if (jobs.has(jobToHideId)) {
             const newJobs = new Map(jobs);
@@ -112,13 +101,13 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
             <JobComponent
                 job={job}
                 key={job.id}
-                hideJob={selectedFilter === 1 ? hideJob : undefined}
-                applyForAJob={selectedFilter === 1 ? applyForAJob : undefined}
+                hideJob={selectedFilter === JobFilterTypeEnum.None ? hideJob : undefined}
+                applyForAJob={selectedFilter === JobFilterTypeEnum.None ? applyForAJob : undefined}
                 selectJob={selectJob}
                 selected={props.selectedJobId === job.id}
             />);
 
-    const onFilterSelected = (filter: number) => {
+    const onFilterSelected = (filter: JobFilterTypeEnum) => {
         setSelectedFilter(filter);
     }
 
@@ -126,37 +115,37 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
         <div className="jobs-container component-card">
             <div className="filters-container">
                 <div
-                    className={`filter-button not-applied-button ${selectedFilter === 1 ? 'selected' : ''}`}
+                    className={`filter-button not-applied-button ${selectedFilter === JobFilterTypeEnum.None ? 'selected' : ''}`}
                     onClick={() => {
-                        onFilterSelected(1)
+                        onFilterSelected(JobFilterTypeEnum.None)
                     }}>
                     not applied
                 </div>
                 <div
-                    className={`filter-button applied-button  ${selectedFilter === 2 ? 'selected' : ''}`}
+                    className={`filter-button applied-button  ${selectedFilter === JobFilterTypeEnum.Applied ? 'selected' : ''}`}
                     onClick={() => {
-                        onFilterSelected(2)
+                        onFilterSelected(JobFilterTypeEnum.Applied)
                     }}>
                     applied
                 </div>
                 <div
-                    className={`filter-button hidden-button  ${selectedFilter === 3 ? 'selected' : ''}`}
+                    className={`filter-button hidden-button  ${selectedFilter === JobFilterTypeEnum.Hidden ? 'selected' : ''}`}
                     onClick={() => {
-                        onFilterSelected(3)
+                        onFilterSelected(JobFilterTypeEnum.Hidden)
                     }}>
                     hidden
                 </div>
                 <div
-                    className={`filter-button important-button  ${selectedFilter === 4 ? 'selected' : ''}`}
+                    className={`filter-button important-button  ${selectedFilter === JobFilterTypeEnum.Important ? 'selected' : ''}`}
                     onClick={() => {
-                        onFilterSelected(4)
+                        onFilterSelected(JobFilterTypeEnum.Important)
                     }}>
                     important
                 </div>
                 <div
-                    className={`filter-button ignored-button  ${selectedFilter === 5 ? 'selected' : ''}`}
+                    className={`filter-button ignored-button  ${selectedFilter === JobFilterTypeEnum.AutoIgnore ? 'selected' : ''}`}
                     onClick={() => {
-                        onFilterSelected(5)
+                        onFilterSelected(JobFilterTypeEnum.AutoIgnore)
                     }}>
                     ignored
                 </div>
@@ -165,7 +154,7 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
                 {jobsRepresentation}
             </div>
             <PaginatorComponent
-                pageCount={Math.round(serviceStateService.jobsCount / 20)}
+                pageCount={Math.floor(jobsCount / 20) + ((jobsCount % 20) > 0 ? 1 : 0)}
                 nextPageExists={jobs.size === 21}
                 loadPage={fetchJobs}
             />
