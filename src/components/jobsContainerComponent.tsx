@@ -101,8 +101,8 @@ export const JobsContainerComponent = (props: JobsContainerProps) => {
             <JobComponent
                 job={job}
                 key={job.id}
-                hideJob={selectedFilter === JobFilterTypeEnum.None ? hideJob : undefined}
-                applyForAJob={selectedFilter === JobFilterTypeEnum.None ? applyForAJob : undefined}
+                hideJob={selectedFilter !== JobFilterTypeEnum.Hidden ? hideJob : undefined}
+                applyForAJob={selectedFilter !== JobFilterTypeEnum.Hidden ? applyForAJob : undefined}
                 selectJob={selectJob}
                 selected={props.selectedJobId === job.id}
             />);

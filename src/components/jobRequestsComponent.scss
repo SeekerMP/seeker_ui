@@ -1,5 +1,4 @@
 .job-requests-component {
-  max-height: 200px;
   width: 100%;
   box-sizing: border-box;
   display: flex;
@@ -7,6 +6,7 @@
   border: 1px solid #cfd2d7;
   background-color: white;
   border-radius: 10px;
+  height: 100%;
 
   .job-requests-container {
     padding: 10px;

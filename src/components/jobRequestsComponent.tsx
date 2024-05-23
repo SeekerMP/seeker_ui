@@ -39,7 +39,6 @@ export const JobRequestsComponent = () => {
                 {jobRequests.map(request =>
                     <div key={`job-request-${request.id}`} className="job-request">
                         <div>{request.text}</div>
-                        <div>{request.lastUpdateDate?.toDateString()}</div>
                     </div>
                 )}
             </div>
