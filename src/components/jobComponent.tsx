@@ -79,7 +79,7 @@ export const JobComponent = (props: JobProps) => {
                     { actionButtons() }
                 </div>
             </div>
-            <h3>{title}</h3>
+            <div dangerouslySetInnerHTML={{__html: `<h3>${title}</h3>` }} className='job-title-container'/>
             {adv}
             {location}
             <div className="spaced">{salary}</div>

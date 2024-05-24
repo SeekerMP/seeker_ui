@@ -16,6 +16,7 @@ export class JobFilter {
     'id'?: number;
     'text'?: string | null;
     'type'?: JobFilterTypeEnum;
+    'subtype'?: JobFilterSubtypeEnum;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -37,6 +38,12 @@ export class JobFilter {
             "baseName": "type",
             "type": "JobFilterTypeEnum",
             "format": ""
+        },
+        {
+            "name": "subtype",
+            "baseName": "subtype",
+            "type": "JobFilterSubtypeEnum",
+            "format": ""
         }    ];
 
     static getAttributeTypeMap() {
@@ -54,5 +61,9 @@ export enum JobFilterTypeEnum {
     AutoIgnore = 'AutoIgnore',
     Hidden = 'Hidden',
     Applied = 'Applied'
+}
+export enum JobFilterSubtypeEnum {
+    Content = 'Content',
+    Title = 'Title'
 }
 

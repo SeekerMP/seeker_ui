@@ -24,6 +24,14 @@ paths:
               - Hidden
               - Applied
             type: string
+        - name: subtype
+          in: query
+          style: form
+          schema:
+            enum:
+              - Content
+              - Title
+            type: string
       responses:
         '200':
           description: Success
@@ -287,6 +295,11 @@ components:
             - AutoIgnore
             - Hidden
             - Applied
+          type: string
+        subtype:
+          enum:
+            - Content
+            - Title
           type: string
       additionalProperties: false
     JobMoveResponse:

@@ -1,4 +1,4 @@
-import './JobRepresentationComponent.scss';
+import './jobRepresentationComponent.scss';
 import {LocalSeekJob} from "../models/LocalSeekJob";
 import {useEffect, useRef} from "react";
 

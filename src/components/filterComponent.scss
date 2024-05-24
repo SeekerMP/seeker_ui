@@ -23,17 +23,51 @@
     padding: 5px;
     flex-wrap: wrap;
     width: 100%;
+    overflow: auto;
 
     .filter-component-filter-cloud-filter-item {
+      display: flex;
+      flex-direction: row;
       box-shadow: 0 0 5px 0 #989ba2;
       background-color: #eaecf1;
       border: 1px solid #eaecf1;
-      height: 25px;
       line-height: 15px;
-      padding: 5px;
       box-sizing: border-box;
       border-radius: 5px;
       margin: 5px;
+      align-self: baseline;
+      overflow: hidden;
+
+      &.filter-item-subtype-content {
+        .filter-item-part {
+          background-color: #c7fcc8;
+
+          &.filter-item-part-subtype {
+            background-color: #96cb7b;
+          }
+        }
+      }
+
+      &.filter-item-subtype-title {
+        .filter-item-part {
+          background-color: #ffd590;
+
+          &.filter-item-part-subtype {
+            background-color: #ffb43b;
+          }
+        }
+      }
+
+      .filter-item-part {
+        padding: 5px;
+
+        &.filter-item-part-subtype {
+          font-size: 13px;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+        }
+      }
     }
   }
 
@@ -43,12 +77,13 @@
     flex-direction: row;
     border-top: none;
     border-radius: 0 0 10px 10px;
-    overflow: hidden;
     box-shadow: 0 -4px 6px 0 darkgray;
     z-index: 2;
+    position: relative;
+    width: 100%;
 
     input {
-      width: 100%;
+      width: calc(100% - 60px);
       border: none;
       outline: none;
       padding-left: 10px;

@@ -18,9 +18,11 @@ export class FilterApiRequestFactory extends BaseAPIRequestFactory {
     /**
      * @param text 
      * @param type 
+     * @param subtype 
      */
-    public async filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<RequestContext> {
+    public async filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', subtype?: 'Content' | 'Title', _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
+
 
 
 
@@ -39,6 +41,11 @@ export class FilterApiRequestFactory extends BaseAPIRequestFactory {
         // Query Params
         if (type !== undefined) {
             requestContext.setQueryParam("type", ObjectSerializer.serialize(type, "'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied'", ""));
+        }
+
+        // Query Params
+        if (subtype !== undefined) {
+            requestContext.setQueryParam("subtype", ObjectSerializer.serialize(subtype, "'Content' | 'Title'", ""));
         }
 
 

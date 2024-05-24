@@ -24,18 +24,20 @@ export class PromiseFilterApi {
     /**
      * @param text 
      * @param type 
+     * @param subtype 
      */
-    public filterAddFilterPostWithHttpInfo(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<HttpInfo<void>> {
-        const result = this.api.filterAddFilterPostWithHttpInfo(text, type, _options);
+    public filterAddFilterPostWithHttpInfo(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', subtype?: 'Content' | 'Title', _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.filterAddFilterPostWithHttpInfo(text, type, subtype, _options);
         return result.toPromise();
     }
 
     /**
      * @param text 
      * @param type 
+     * @param subtype 
      */
-    public filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Promise<void> {
-        const result = this.api.filterAddFilterPost(text, type, _options);
+    public filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', subtype?: 'Content' | 'Title', _options?: Configuration): Promise<void> {
+        const result = this.api.filterAddFilterPost(text, type, subtype, _options);
         return result.toPromise();
     }
 

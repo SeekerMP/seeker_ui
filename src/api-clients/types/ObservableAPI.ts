@@ -28,9 +28,10 @@ export class ObservableFilterApi {
     /**
      * @param text 
      * @param type 
+     * @param subtype 
      */
-    public filterAddFilterPostWithHttpInfo(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Observable<HttpInfo<void>> {
-        const requestContextPromise = this.requestFactory.filterAddFilterPost(text, type, _options);
+    public filterAddFilterPostWithHttpInfo(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', subtype?: 'Content' | 'Title', _options?: Configuration): Observable<HttpInfo<void>> {
+        const requestContextPromise = this.requestFactory.filterAddFilterPost(text, type, subtype, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -51,9 +52,10 @@ export class ObservableFilterApi {
     /**
      * @param text 
      * @param type 
+     * @param subtype 
      */
-    public filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', _options?: Configuration): Observable<void> {
-        return this.filterAddFilterPostWithHttpInfo(text, type, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    public filterAddFilterPost(text?: string, type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied', subtype?: 'Content' | 'Title', _options?: Configuration): Observable<void> {
+        return this.filterAddFilterPostWithHttpInfo(text, type, subtype, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
     }
 
     /**

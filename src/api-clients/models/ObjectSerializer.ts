@@ -6,7 +6,7 @@ export * from '../models/JobRequestResponse';
 export * from '../models/SyncState';
 
 import { Job    , JobFilterEnum   } from '../models/Job';
-import { JobFilter  , JobFilterTypeEnum   } from '../models/JobFilter';
+import { JobFilter  , JobFilterTypeEnum  , JobFilterSubtypeEnum   } from '../models/JobFilter';
 import { JobMoveResponse } from '../models/JobMoveResponse';
 import { JobRequest } from '../models/JobRequest';
 import { JobRequestResponse } from '../models/JobRequestResponse';
@@ -27,6 +27,7 @@ let primitives = [
 let enumsMap: Set<string> = new Set<string>([
     "JobFilterEnum",
     "JobFilterTypeEnum",
+    "JobFilterSubtypeEnum",
 ]);
 
 let typeMap: {[index: string]: any} = {

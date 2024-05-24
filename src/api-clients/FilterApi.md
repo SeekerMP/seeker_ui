@@ -27,6 +27,8 @@ let body:.FilterApiFilterAddFilterPostRequest = {
   text: "text_example",
   // 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied' (optional)
   type: "None",
+  // 'Content' | 'Title' (optional)
+  subtype: "Content",
 };
 
 apiInstance.filterAddFilterPost(body).then((data:any) => {
@@ -41,6 +43,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **text** | [**string**] |  | (optional) defaults to undefined
  **type** | [**&#39;None&#39; | &#39;Important&#39; | &#39;AutoIgnore&#39; | &#39;Hidden&#39; | &#39;Applied&#39;**]**Array<&#39;None&#39; &#124; &#39;Important&#39; &#124; &#39;AutoIgnore&#39; &#124; &#39;Hidden&#39; &#124; &#39;Applied&#39;>** |  | (optional) defaults to undefined
+ **subtype** | [**&#39;Content&#39; | &#39;Title&#39;**]**Array<&#39;Content&#39; &#124; &#39;Title&#39;>** |  | (optional) defaults to undefined
 
 
 ### Return type

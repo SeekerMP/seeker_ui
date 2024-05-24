@@ -24,6 +24,12 @@ export interface FilterApiFilterAddFilterPostRequest {
      * @memberof FilterApifilterAddFilterPost
      */
     type?: 'None' | 'Important' | 'AutoIgnore' | 'Hidden' | 'Applied'
+    /**
+     * 
+     * @type &#39;Content&#39; | &#39;Title&#39;
+     * @memberof FilterApifilterAddFilterPost
+     */
+    subtype?: 'Content' | 'Title'
 }
 
 export interface FilterApiFilterGetAllFiltersGetRequest {
@@ -40,14 +46,14 @@ export class ObjectFilterApi {
      * @param param the request object
      */
     public filterAddFilterPostWithHttpInfo(param: FilterApiFilterAddFilterPostRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
-        return this.api.filterAddFilterPostWithHttpInfo(param.text, param.type,  options).toPromise();
+        return this.api.filterAddFilterPostWithHttpInfo(param.text, param.type, param.subtype,  options).toPromise();
     }
 
     /**
      * @param param the request object
      */
     public filterAddFilterPost(param: FilterApiFilterAddFilterPostRequest = {}, options?: Configuration): Promise<void> {
-        return this.api.filterAddFilterPost(param.text, param.type,  options).toPromise();
+        return this.api.filterAddFilterPost(param.text, param.type, param.subtype,  options).toPromise();
     }
 
     /**
