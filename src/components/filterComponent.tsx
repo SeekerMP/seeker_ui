@@ -52,7 +52,7 @@ export const FilterComponent = (props: FilterComponentProps) => {
     }
 
     return (
-        <div className="filter-component">
+        <div className={ `filter-component filter-component-${ props.title.toLowerCase() }` }>
             <div className="filter-component-title">{props.title}</div>
             <div className="filter-component-filter-cloud">
                 { renderedFilters }
