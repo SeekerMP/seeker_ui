@@ -36,8 +36,5 @@ export class JobMoveResponse {
     static getAttributeTypeMap() {
         return JobMoveResponse.attributeTypeMap;
     }
-
-    public constructor() {
-    }
 }
 

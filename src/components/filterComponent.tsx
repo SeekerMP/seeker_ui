@@ -1,6 +1,6 @@
 import './filterComponent.scss';
 import plusIcon from "Assets/plus.svg";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {JobFilter, JobFilterSubtypeEnum, JobFilterTypeEnum} from "../api-clients";
 import {SelectFilterSubtypeComponent} from "./selectFilterSubtypeComponent";
 
@@ -14,10 +14,6 @@ type FilterComponentProps = {
 export const FilterComponent = (props: FilterComponentProps) => {
     const [newFilter, setNewFilter] = useState<string>('');
     const [subtype, setSubtype] = useState<JobFilterSubtypeEnum>(JobFilterSubtypeEnum.Content);
-
-    useEffect(() => {
-        console.log(subtype);
-    }, [subtype]);
 
     const onInputChange = (event: React.FormEvent<HTMLInputElement>) => {
         setNewFilter(event.currentTarget.value);

@@ -1,0 +1,23 @@
+.sync-and-filters-page {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  overflow: auto;
+  height: 100%;
+  align-items: center;
+
+  &> * {
+    width: 300px;
+    max-width: 300px;
+    height: 300px;
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 599px) {
+  .sync-and-filters-page {
+    &> * {
+      margin-bottom: 10px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import {LocalSeekJob} from "../models/LocalSeekJob";
+import {LocalSeekJob} from "../../models/LocalSeekJob";
 import "./jobComponent.scss";
 import hideJobIcon from "Assets/hide-job.svg";
 import applyIcon from "Assets/apply.svg";
@@ -39,11 +39,13 @@ export const JobComponent = (props: JobProps) => {
         )
     }
 
-    const onHideClicked = () => {
+    const onHideClicked = (event: React.MouseEvent<HTMLImageElement>) => {
+        event.stopPropagation();
         props.hideJob?.(props.job.id);
     }
 
-    const onApplyClicked = () => {
+    const onApplyClicked = (event: React.MouseEvent<HTMLImageElement>) => {
+        event.stopPropagation();
         props.applyForAJob?.(props.job.id);
     }
 

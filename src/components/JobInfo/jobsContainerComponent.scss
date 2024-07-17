@@ -1,0 +1,11 @@
+.jobs-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+
+  .jobs-container-list {
+    height: calc(100% - 50px);
+    overflow: auto;
+  }
+}

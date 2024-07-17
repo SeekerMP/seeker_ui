@@ -1,5 +1,5 @@
 import './jobRepresentationComponent.scss';
-import {LocalSeekJob} from "../models/LocalSeekJob";
+import {LocalSeekJob} from "../../models/LocalSeekJob";
 import {useEffect, useRef} from "react";
 
 type JobRepresentationProps = {
@@ -18,12 +18,10 @@ export const JobRepresentationComponent = (props: JobRepresentationProps) => {
     }, [props.job]);
 
     return (
-        <div className="job-representation component-card">
-            <div
-                className="job-representation-content"
-                dangerouslySetInnerHTML={{__html: props.job?.content ?? ""}}
-                ref={jobRepresentationContainer}
-            />
-        </div>
+        <div
+            className="job-representation-content"
+            dangerouslySetInnerHTML={{__html: props.job?.content ?? ""}}
+            ref={jobRepresentationContainer}
+        />
     )
 }

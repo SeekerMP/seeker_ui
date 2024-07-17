@@ -30,7 +30,7 @@ export const SyncStateComponent = () => {
     }, []);
 
     return (
-        <div className='component-card sync-state-container'>
+        <div className='sync-state-container'>
             { syncInProgress && syncState != null ?
             <SyncStateProgressContainer state={syncState}/> :
             <SyncStateResultContainer
