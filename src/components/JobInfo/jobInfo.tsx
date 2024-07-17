@@ -141,6 +141,7 @@ export const JobInfo = () => {
 
     const renderedFilterButtons = filters.map(filter =>
         <button
+            key={`filter-${filter.type}`}
             className={`job-info-top-panel-button ${selectedFilter === filter.type ? 'selected' : ''}`}
             onClick={() => {
                 onFilterSelected(filter.type)
@@ -148,7 +149,6 @@ export const JobInfo = () => {
         >
             <img
                 src={filter.icon}
-                key={`filter-${filter.type}`}
                 className={`job-info-top-panel-icon`}
             />
         </button>

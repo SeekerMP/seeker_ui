@@ -27,7 +27,7 @@ export const Header = () => {
             <ul>
                 {
                     links.map(link =>
-                        <li>
+                        <li key={`link-${link.route}`}>
                             <Link
                                 to={link.route}
                                 className={ `${link.route }` === location.pathname.slice(1) ? 'selected' : ''}>
