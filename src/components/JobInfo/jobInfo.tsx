@@ -1,34 +1,37 @@
-import {SyncStateComponent} from "../syncState/syncStateComponent";
-import {JobRepresentationComponent} from "./jobRepresentationComponent";
-import React, {useEffect, useRef, useState} from "react";
-import {LocalSeekJob} from "../../models/LocalSeekJob";
+import { JobRepresentationComponent } from "./jobRepresentationComponent";
+import React, { useEffect, useRef, useState } from "react";
+import { LocalSeekJob } from "@models/LocalSeekJob";
 import './jobInfo.scss';
 import './jobsContainerComponent.scss';
-import {Job, JobApi, JobFilterTypeEnum, JobMoveResponse, JobRequestResponse} from "../../api-clients";
-import {configuration} from "../../common/common-constants";
-import {JobComponent} from "./jobComponent";
-import {PaginatorComponent} from "../paginatorComponent";
-import {useMediaQuery} from "react-responsive";
-import {AnimatePresence, motion} from "framer-motion";
+import { Job, JobApi, JobFilterTypeEnum, JobMoveResponse, JobRequestResponse } from "../../api-clients";
+import { configuration } from "@common/common-constants";
+import { JobComponent } from "./jobComponent";
+import { PaginatorComponent } from "@components/paginatorComponent";
+import { useMediaQuery } from "react-responsive";
+import { AnimatePresence, motion } from "framer-motion";
 
-import hideJobIcon from "Assets/hide-job.svg";
-import appliedListIcon from "Assets/appliedList.svg";
-import importantIcon from "Assets/important.svg";
-import filterIcon from "Assets/filter.svg";
-import listIcon from "Assets/list.svg";
-import backIcon from "Assets/back.svg";
-import externalIcon from "Assets/external.svg";
-import applyIcon from "Assets/apply.svg";
+import { HideIcon } from "@icons/hideIcon";
+import { ApplyIcon } from "@icons/applyIcon";
+import { ImportantIcon } from "@icons/importantIcon";
+import { FilterIcon } from "@icons/filterIcon";
+import { ListIcon } from "@icons/listIcon";
+import { ExternalIcon } from "@icons/externalIcon";
+import { BackIcon } from "@icons/backIcon";
 
-export const JobInfo = () => {
+type JobInfoProps = {
+    hasMouse: boolean
+}
+
+export const JobInfo = (props: JobInfoProps) => {
     const [selectedJob, setSelectedJob] = useState<LocalSeekJob | undefined>(undefined);
     const [jobsCount, setJobsCount] = useState<number>(0);
     const [jobs, setJobs] = useState<Map<number, LocalSeekJob>>(new Map());
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [selectedFilter, setSelectedFilter] = useState<JobFilterTypeEnum>(JobFilterTypeEnum.None);
     const jobsContainerRef = useRef<HTMLDivElement | null>(null);
-    const api = new JobApi(configuration);
+    const showRightPanelOutside = !useMediaQuery({maxWidth: 1000});
 
+    const api = new JobApi(configuration);
     const hideJobDetails = () => setSelectedJob(undefined);
 
     const selectJobById = (jobId: number) => {
@@ -120,23 +123,24 @@ export const JobInfo = () => {
                 applyForAJob={selectedFilter !== JobFilterTypeEnum.Hidden ? applyForAJob : undefined}
                 selectJob={selectJobById}
                 selected={selectedJob?.id === job.id}
+                hasMouse={props.hasMouse}
             />);
 
     const filters = [{
         type: JobFilterTypeEnum.None,
-        icon: listIcon
+        icon: <ListIcon className='job-info-top-panel-icon' />
     }, {
         type: JobFilterTypeEnum.Applied,
-        icon: appliedListIcon
+        icon: <ApplyIcon className='job-info-top-panel-icon'/>
     }, {
         type: JobFilterTypeEnum.Hidden,
-        icon: hideJobIcon
+        icon: <HideIcon className='job-info-top-panel-icon' />
     }, {
         type: JobFilterTypeEnum.Important,
-        icon: importantIcon
+        icon: <ImportantIcon className='job-info-top-panel-icon' />
     }, {
         type: JobFilterTypeEnum.AutoIgnore,
-        icon: filterIcon
+        icon: <FilterIcon className='job-info-top-panel-icon' />
     }];
 
     const renderedFilterButtons = filters.map(filter =>
@@ -147,14 +151,9 @@ export const JobInfo = () => {
                 onFilterSelected(filter.type)
             }}
         >
-            <img
-                src={filter.icon}
-                className={`job-info-top-panel-icon`}
-            />
+            { filter.icon }
         </button>
     );
-
-    const showRightPanelOutside = !useMediaQuery({maxWidth: 1000});
 
     const rightPanel =
         <div className="right-panel">
@@ -169,20 +168,20 @@ export const JobInfo = () => {
 
     const descriptionButtons = [{
         key: 'external',
-        icon: externalIcon,
+        icon: <ExternalIcon />,
         onClick: onExternalClicked
     }]
 
     if (selectedFilter !== JobFilterTypeEnum.Hidden) {
         descriptionButtons.push({
             key: 'apply',
-            icon: applyIcon,
+            icon: <ApplyIcon />,
             onClick: applyForAJob
         });
 
         descriptionButtons.push({
             key: 'hide',
-            icon: hideJobIcon,
+            icon: <HideIcon />,
             onClick: hideJob
         });
     }
@@ -200,7 +199,7 @@ export const JobInfo = () => {
                 className='job-info-top-panel-button'
                 onClick={_ => setSelectedJob(undefined)}
             >
-                <img src={backIcon} />
+                <BackIcon />
             </button>
             <div className='job-manipulation-buttons'>
                 {descriptionButtons.map(data =>
@@ -209,7 +208,7 @@ export const JobInfo = () => {
                         key={`job-manipulation-button-${data.key}`}
                         onClick={_ => data.onClick(selectedJob?.id ?? -1)}
                     >
-                        <img src={data.icon}/>
+                        { data.icon }
                     </button>
                 )}
             </div>

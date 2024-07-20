@@ -1,55 +1,112 @@
-.job {
-  border-radius: 10px;
-  box-sizing: border-box;
-  padding: 10px;
-  border: 1px solid #cfd2d7;
-  margin: 10px;
-  transition: border-color .2s ease;
+.job-info-container {
   position: relative;
-  background-color: white;
-  cursor: pointer;
 
-  &:hover, &.selected {
-    border-color: #1e47a9;
-  }
-
-  .job-header {
-    height: 30px;
+  .job-info-background {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    height: 100%;
+    width: calc(100% - 20px);
 
-    .job-logo {
-      max-width: 200px;
-      max-height: 30px;
+    .job-info-hide-button, .job-info-apply-button {
+      height: 100%;
+      width: 110px;
+      min-width: 110px;
+      z-index: 1;
+      border: none;
+
+      .icon-colored-stroke-part {
+        stroke: #DFDFDF;
+      }
+
+      svg {
+        width: 50px;
+      }
     }
 
-    .job-actions-container {
-      position: absolute;
-      right: 10px;
+    .job-info-apply-button {
+      border-radius: 10px 0 0 10px;
+      background-color: #70A66B;
+      padding-right: 10px;
+    }
+
+    .job-info-hide-button {
+      border-radius: 0 10px 10px 0;
+      background-color: #C1625A;
+      padding-left: 10px;
+    }
+
+    .job-info-background-gradient {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #70A66B 0%, #C1625A 100%);
+    }
+  }
+
+  .job {
+    z-index: 2;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #cfd2d7;
+    margin: 10px;
+    transition: border-color .2s ease;
+    position: relative;
+    background-color: white;
+    cursor: pointer;
+
+    &:hover, &.selected {
+      border-color: #1e47a9;
+    }
+
+    .job-header {
+      height: 30px;
       display: flex;
       flex-direction: row;
+      justify-content: space-between;
 
-      .job-action-button {
-        cursor: pointer;
-        height: 25px;
-        border-radius: 5px;
+      .job-logo {
+        max-width: 200px;
+        max-height: 30px;
+      }
 
-        &:hover {
-          background-color: #E6E6E8;
+      .job-actions-container {
+        position: absolute;
+        right: 10px;
+        display: flex;
+        flex-direction: row;
+
+        .job-action-button {
+          cursor: pointer;
+          height: 25px;
+          width: 25px;
+          border-radius: 5px;
+          background: none;
+          border: none;
+          padding: 0;
+
+          &:hover {
+            background-color: #E6E6E8;
+          }
+
+          svg {
+            height: 100%;
+            width: 100%;
+          }
         }
       }
     }
-  }
 
-  .job-title-container .filtered-text {
-    background-color: green;
-    color: white;
-    border-radius: 5px;
-    padding: 2px 5px;
-  }
+    .job-title-container .filtered-text {
+      background-color: green;
+      color: white;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
 
-  .spaced {
-    margin: 10px 0;
+    .spaced {
+      margin: 10px 0;
+    }
   }
 }

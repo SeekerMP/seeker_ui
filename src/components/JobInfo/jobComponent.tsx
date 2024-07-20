@@ -1,8 +1,11 @@
-import {LocalSeekJob} from "../../models/LocalSeekJob";
+import { LocalSeekJob } from "@models/LocalSeekJob";
 import "./jobComponent.scss";
-import hideJobIcon from "Assets/hide-job.svg";
-import applyIcon from "Assets/apply.svg";
-import externalIcon from "Assets/external.svg";
+import { motion, PanInfo, useAnimate } from "framer-motion";
+import React from "react";
+
+import { HideIcon } from "@icons/hideIcon";
+import { ApplyIcon } from "@icons/applyIcon";
+import { ExternalIcon } from "@icons/externalIcon";
 
 type JobProps = {
     job: LocalSeekJob,
@@ -10,10 +13,13 @@ type JobProps = {
     applyForAJob?: (jobId: number) => void;
     selectJob: (jobId: number) => void;
     selected: boolean;
+    hasMouse: boolean
 }
 
 export const JobComponent = (props: JobProps) => {
     const { title, teaser, branding, jobLocation, advertiser, salary, bulletPoints, solMetadata } = props.job
+    const [scope, animate] = useAnimate();
+
     let logo = null;
     let location = null;
     let adv = null;
@@ -39,12 +45,12 @@ export const JobComponent = (props: JobProps) => {
         )
     }
 
-    const onHideClicked = (event: React.MouseEvent<HTMLImageElement>) => {
+    const onHideClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         props.hideJob?.(props.job.id);
     }
 
-    const onApplyClicked = (event: React.MouseEvent<HTMLImageElement>) => {
+    const onApplyClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation();
         props.applyForAJob?.(props.job.id);
     }
@@ -56,14 +62,26 @@ export const JobComponent = (props: JobProps) => {
     const actionButtons = () => {
         const buttons = [];
 
-        buttons.push(<img src={externalIcon} key="button-external" className="job-action-button" onClick={onExternalClicked}/>);
+        buttons.push(
+            <button key="button-external" className="job-action-button" onClick={ onExternalClicked }>
+                <ExternalIcon />
+            </button>
+        );
 
-        if (props.applyForAJob) {
-            buttons.push(<img src={applyIcon} key="button-apply" className="job-action-button" onClick={onApplyClicked}/>);
+        if (props.applyForAJob && props.hasMouse) {
+            buttons.push(
+                <button key="button-apply" className="job-action-button" onClick={ onApplyClicked }>
+                    <ApplyIcon />
+                </button>
+            );
         }
 
-        if (props.hideJob) {
-            buttons.push(<img src={hideJobIcon} key="button-hide" className="job-action-button" onClick={onHideClicked}/>);
+        if (props.hideJob && props.hasMouse) {
+            buttons.push(
+                <button key="button-hide" className="job-action-button" onClick={onHideClicked}>
+                    <HideIcon />
+                </button>
+            );
         }
 
         return buttons;
@@ -73,20 +91,51 @@ export const JobComponent = (props: JobProps) => {
         props.selectJob(props.job.id);
     }
 
+    const animateDragOver =(event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+        if (Math.abs(info.offset.x) < 100) {
+            animate(scope.current, { x: 0 });
+        }
+    }
+
     return (
-        <div className={ `job ${ props.selected ? "selected" : '' }`} onClick={ onJobSelected }>
-            <div className="job-header">
-                {logo}
-                <div className="job-actions-container">
-                    { actionButtons() }
+        <div className='job-info-container'>
+            <motion.div
+                ref={scope}
+                drag={!props.hasMouse && 'x'}
+                dragConstraints={{ left: -100, top: 0, right: 100 }}
+                dragElastic={0.1}
+                onDragEnd={ animateDragOver }
+                className={ `job ${ props.selected ? "selected" : '' }`}
+                onClick={ onJobSelected }
+            >
+                <div className="job-header">
+                    {logo}
+                    <div className="job-actions-container">
+                        { actionButtons() }
+                    </div>
                 </div>
-            </div>
-            <div dangerouslySetInnerHTML={{__html: `<h3>${title}</h3>` }} className='job-title-container'/>
-            {adv}
-            {location}
-            <div className="spaced">{salary}</div>
-            {bullets}
-            <div>{teaser}</div>
+                <div dangerouslySetInnerHTML={{__html: `<h3>${title}</h3>` }} className='job-title-container'/>
+                {adv}
+                {location}
+                <div className="spaced">{salary}</div>
+                {bullets}
+                <div>{teaser}</div>
+            </motion.div>
+            {
+                !props.hasMouse &&
+                <div className='job-info-background'>
+                    <button className='job-info-apply-button'>
+                        <ApplyIcon />
+                    </button>
+                    <div className='job-info-background-gradient'/>
+                    <button
+                        className='job-info-hide-button'
+                        onClick={onHideClicked}
+                    >
+                        <HideIcon />
+                    </button>
+                </div>
+            }
         </div>
     )
 }

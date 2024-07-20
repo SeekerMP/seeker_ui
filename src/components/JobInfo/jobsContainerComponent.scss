@@ -7,5 +7,6 @@
   .jobs-container-list {
     height: calc(100% - 50px);
     overflow: auto;
+    overflow-x: hidden;
   }
 }

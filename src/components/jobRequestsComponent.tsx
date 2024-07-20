@@ -1,8 +1,8 @@
 import './jobRequestsComponent.scss';
-import {configuration} from "../common/common-constants";
+import {configuration} from "@common/common-constants";
 import {JobRequest, JobRequestApi} from "../api-clients";
 import React, {useEffect, useState} from "react";
-import plusIcon from "Assets/plus.svg";
+import { PlusIcon } from "@icons/plusIcon";
 
 export const JobRequestsComponent = () => {
     const [jobRequests, setJobRequests] = useState<JobRequest[]>([]);
@@ -46,7 +46,7 @@ export const JobRequestsComponent = () => {
                 <input onChange={onInputChange} value={newRequest ?? ''}/>
                 <div className={ `job-requests-add-container-add-button ${ newRequest === '' ? 'disabled' : '' }` }
                      onClick={addNewRequest}>
-                    <img src={plusIcon}/>
+                    <PlusIcon />
                 </div>
             </div>
         </div>

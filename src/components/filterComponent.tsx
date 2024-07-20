@@ -1,8 +1,8 @@
 import './filterComponent.scss';
-import plusIcon from "Assets/plus.svg";
-import React, {useState} from "react";
-import {JobFilter, JobFilterSubtypeEnum, JobFilterTypeEnum} from "../api-clients";
-import {SelectFilterSubtypeComponent} from "./selectFilterSubtypeComponent";
+import { PlusIcon } from "@icons/plusIcon";
+import React, { useState } from "react";
+import { JobFilter, JobFilterSubtypeEnum, JobFilterTypeEnum } from "../api-clients";
+import { SelectFilterSubtypeComponent } from "./selectFilterSubtypeComponent";
 
 type FilterComponentProps = {
     filters: JobFilter[],
@@ -58,7 +58,7 @@ export const FilterComponent = (props: FilterComponentProps) => {
                 <input onChange={onInputChange} value={newFilter ?? ''}/>
                 <div className={`filter-component-add-container-add-button ${newFilter === '' ? 'disabled' : ''}`}
                      onClick={addNewFilter}>
-                    <img src={plusIcon}/>
+                    <PlusIcon />
                 </div>
             </div>
         </div>
