@@ -3,34 +3,59 @@
   flex-direction: row;
   width: 100%;
   height: 50px;
-  box-shadow: 0px -4px 6px 0px darkgray;
+  box-shadow: 0px -4px 6px 0px #e4e1e1;
   justify-content: center;
   align-items: center;
   z-index: 2;
   background-color: white;
   position: relative;
+  overflow: hidden;
 
-  button {
-    height: 30px;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #eaecf1;
-    border: 1px solid #eaecf1;
-    transition: border-color .2s ease;
+  .paginator-buttons {
+    display: flex;
+    flex-direction: row;
+    background-color: #D7E1FC;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 80%;
+    box-sizing: border-box;
+    position: absolute;
 
-    &:disabled {
-    cursor: default;
-  }
-    
-    &:not([disabled]):hover {
-      border-color: #1e47a9;
+    button {
+      height: 100%;
+      cursor: pointer;
+      border: none;
+      width: 50px;
+      transition: border-color .2s ease;
+      background-color: #D7E1FC;
+      color: white;
+
+      svg {
+        padding: 0.1vh;
+
+        &.previous-button-icon {
+          transform: rotate(180deg);
+        }
+
+        .icon-colored-stroke-part {
+          stroke: #4573E8;
+        }
+      }
+
+      &:disabled {
+        cursor: default;
+      }
     }
-  }
 
-  .counter {
-    height: 30px;
-    line-height: 30px;
-    font-size: 14px;
-    margin: 0 10px;
+    .counter {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      margin: 0 10px;
+      width: 100px;
+      cursor: default;
+    }
   }
 }

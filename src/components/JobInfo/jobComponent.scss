@@ -46,18 +46,32 @@
 
   .job {
     z-index: 2;
-    border-radius: 10px;
     box-sizing: border-box;
     padding: 10px;
-    border: 1px solid #cfd2d7;
-    margin: 10px;
-    transition: border-color .2s ease;
+    border-bottom: 1px solid #cfd2d7;
+    margin: 0 10px;
+    transition: border-color .2s ease, background-color 0.3s;
     position: relative;
     background-color: white;
     cursor: pointer;
 
-    &:hover, &.selected {
-      border-color: #1e47a9;
+    &.selected {
+      background: #D7E1FC;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        background-color: #eef1fa;
+      }
+    }
+
+    &.removed {
+      background-color: red;
+
+      & >* {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
     }
 
     .job-header {
@@ -67,8 +81,12 @@
       justify-content: space-between;
 
       .job-logo {
-        max-width: 200px;
-        max-height: 30px;
+        max-width: 210px;
+        max-height: 40px;
+        border-radius: 5px;
+        padding: 5px;
+        background: white;
+        box-sizing: border-box;
       }
 
       .job-actions-container {
@@ -86,8 +104,10 @@
           border: none;
           padding: 0;
 
-          &:hover {
-            background-color: #E6E6E8;
+          @media (any-hover: hover) {
+            &:hover {
+              background-color: white;
+            }
           }
 
           svg {

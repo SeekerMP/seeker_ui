@@ -1,5 +1,7 @@
 import {useState} from "react";
 import "./paginatorComponent.scss";
+import {NextIcon} from "@icons/nextIcon";
+import {AnimatePresence, motion} from "framer-motion";
 
 type PaginatorProps = {
     pageCount: number,
@@ -34,9 +36,27 @@ export const PaginatorComponent = (props: PaginatorProps) => {
 
     return(
         <div className="paginator">
-            <button disabled={currentPage === 1 || loadingInProgress} onClick={onPrevPageClicked}>prev</button>
-            <div className="counter">{currentPage} - {props.pageCount}</div>
-            <button disabled={!props.nextPageExists || loadingInProgress} onClick={onNextPageClicked}>next</button>
+            <AnimatePresence>
+            {
+                props.pageCount > 1 &&
+                <motion.div
+                    className="paginator-buttons"
+                    key='paginator-buttons'
+                    initial={{top: -100}}
+                    animate={{top: '10%'}}
+                    exit={{top: 100}}
+                    transition={{type: 'spring', duration: 0.3}}
+                >
+                    <button disabled={ loadingInProgress } onClick={onPrevPageClicked}>
+                        { currentPage !== 1 && <NextIcon className='previous-button-icon'/> }
+                    </button>
+                    <div className="counter">{currentPage} - {props.pageCount}</div>
+                    <button disabled={!props.nextPageExists || loadingInProgress} onClick={onNextPageClicked}>
+                        { props.nextPageExists && <NextIcon /> }
+                    </button>
+                </motion.div>
+            }
+            </AnimatePresence>
         </div>
     )
 }

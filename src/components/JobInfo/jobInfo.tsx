@@ -157,7 +157,7 @@ export const JobInfo = (props: JobInfoProps) => {
 
     const rightPanel =
         <div className="right-panel">
-            <div className="job-representation component-card">
+            <div className="job-representation">
                 <JobRepresentationComponent job={selectedJob}/>
             </div>
         </div>
@@ -214,11 +214,11 @@ export const JobInfo = (props: JobInfoProps) => {
             </div>
         </motion.div>
 
-return (
-    <div className={`job-info ${selectedJob ? 'job-selected' : ''}`}>
-        <div className="jobs-container component-card">
-            <div className='job-info-top-panel'>
-                <AnimatePresence>
+    return (
+        <div className={`job-info ${selectedJob ? 'job-selected' : ''}`}>
+            <div className="jobs-container">
+                <div className='job-info-top-panel'>
+                    <AnimatePresence>
                     {
                         (!showRightPanelOutside && selectedJob) ?
                                 jobDescriptionButtonsPanel :
@@ -240,7 +240,9 @@ return (
                         rightPanel :
                     <div className='jobs-list-with-pagination'>
                         <div ref={jobsContainerRef} className="jobs-container-list">
-                            {jobsRepresentation}
+                            <AnimatePresence>
+                                {jobsRepresentation}
+                            </AnimatePresence>
                         </div>
                         <PaginatorComponent
                             pageCount={Math.floor(jobsCount / 20) + ((jobsCount % 20) > 0 ? 1 : 0)}

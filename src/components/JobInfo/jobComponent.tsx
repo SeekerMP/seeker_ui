@@ -1,7 +1,7 @@
 import { LocalSeekJob } from "@models/LocalSeekJob";
 import "./jobComponent.scss";
 import { motion, PanInfo, useAnimate } from "framer-motion";
-import React from "react";
+import React, {useState} from "react";
 
 import { HideIcon } from "@icons/hideIcon";
 import { ApplyIcon } from "@icons/applyIcon";
@@ -19,6 +19,7 @@ type JobProps = {
 export const JobComponent = (props: JobProps) => {
     const { title, teaser, branding, jobLocation, advertiser, salary, bulletPoints, solMetadata } = props.job
     const [scope, animate] = useAnimate();
+    const [removed, setRemoved] = useState(false);
 
     let logo = null;
     let location = null;
@@ -46,6 +47,7 @@ export const JobComponent = (props: JobProps) => {
     }
 
     const onHideClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setRemoved(true);
         event.stopPropagation();
         props.hideJob?.(props.job.id);
     }
@@ -98,14 +100,19 @@ export const JobComponent = (props: JobProps) => {
     }
 
     return (
-        <div className='job-info-container'>
+        <motion.div
+            key='job-info-container'
+            exit={{opacity: 0, height: 0}}
+            transition={{duration: 0.3}}
+            className='job-info-container'
+        >
             <motion.div
                 ref={scope}
                 drag={!props.hasMouse && 'x'}
                 dragConstraints={{ left: -100, top: 0, right: 100 }}
                 dragElastic={0.1}
                 onDragEnd={ animateDragOver }
-                className={ `job ${ props.selected ? "selected" : '' }`}
+                className={ `job ${ props.selected ? "selected" : '' } ${ removed ? 'removed' : '' }`}
                 onClick={ onJobSelected }
             >
                 <div className="job-header">
@@ -136,6 +143,6 @@ export const JobComponent = (props: JobProps) => {
                     </button>
                 </div>
             }
-        </div>
+        </motion.div>
     )
 }

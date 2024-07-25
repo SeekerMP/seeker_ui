@@ -5,6 +5,7 @@
   justify-content: center;
   width: 100%;
   max-width: 960px;
+  background: white;
 
   .jobs-container {
     width: 100%;
@@ -21,7 +22,7 @@
     height: 50px;
     min-height: 50px;
     background-color: white;
-    box-shadow: 0 4px 6px 0 darkgray;
+    box-shadow: 0 4px 6px 0 #e4e1e1;
     position: relative;
     overflow: hidden;
 
@@ -78,10 +79,6 @@
   .jobs-container {
     border-right: 1px solid #dde1ef;
     border-left: 1px solid #dde1ef;
-  }
-
-  .job-representation {
-    padding: 0;
   }
 
   .right-panel {

@@ -14,19 +14,21 @@ html, body, #root, .App {
       justify-content: center;
       height: 100%;
       overflow: hidden;
+      background: #F7F8FA;
 
       > *:not(:last-child) {
         margin-right: 10px;
       }
 
       @media (min-width: 1001px) {
-        .component-card {
-          overflow: hidden;
+        .job-info {
+          border: 1px solid #cfd2d7;
           border-radius: 10px;
-          box-shadow: 0 0 5px 0 #97989b;
-          box-sizing: border-box;
-          border: 1px solid #97989b;
-          background-color: #f9f9f9;
+          overflow: hidden;
+        }
+
+        .jobs-container {
+          border-right: 1px solid #cfd2d7;
         }
       }
 

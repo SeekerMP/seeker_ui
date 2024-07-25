@@ -12,7 +12,6 @@ import {useMediaQuery} from "react-responsive";
 function App() {
     useEffect(() => {
         const stateApiClient = new ServiceStateApi(configuration);
-
         stateApiClient.serviceStateGet().then((state) => {
             serviceStateService.init(state);
         });
