@@ -12,13 +12,11 @@
 
 import { HttpFile } from '../http/http';
 
-export class Job {
+export class User {
     'id'?: number;
-    'preview'?: string | null;
-    'content'?: string | null;
-    'title'?: string | null;
-    'postedDate'?: Date;
-    'filter'?: JobFilterEnum;
+    'name'?: string | null;
+    'email'?: string | null;
+    'profilePictureUrl'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -30,50 +28,29 @@ export class Job {
             "format": "int32"
         },
         {
-            "name": "preview",
-            "baseName": "preview",
+            "name": "name",
+            "baseName": "name",
             "type": "string",
             "format": ""
         },
         {
-            "name": "content",
-            "baseName": "content",
+            "name": "email",
+            "baseName": "email",
             "type": "string",
             "format": ""
         },
         {
-            "name": "title",
-            "baseName": "title",
+            "name": "profilePictureUrl",
+            "baseName": "profilePictureUrl",
             "type": "string",
-            "format": ""
-        },
-        {
-            "name": "postedDate",
-            "baseName": "postedDate",
-            "type": "Date",
-            "format": "date-time"
-        },
-        {
-            "name": "filter",
-            "baseName": "filter",
-            "type": "JobFilterEnum",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return Job.attributeTypeMap;
+        return User.attributeTypeMap;
     }
 
     public constructor() {
     }
-}
-
-
-export enum JobFilterEnum {
-    None = 'None',
-    Important = 'Important',
-    AutoIgnore = 'AutoIgnore',
-    Hidden = 'Hidden',
-    Applied = 'Applied'
 }
 

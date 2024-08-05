@@ -3,6 +3,55 @@ info:
   title: SeekerAPI
   version: '1.0'
 paths:
+  /Account/userInfo:
+    get:
+      tags:
+        - Account
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /Authorization/googleSignIn:
+    post:
+      tags:
+        - Authorization
+      parameters:
+        - name: token
+          in: query
+          style: form
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  /Authorization/logout:
+    post:
+      tags:
+        - Authorization
+      responses:
+        '200':
+          description: Success
   /Filter/addFilter:
     post:
       tags:
@@ -35,6 +84,18 @@ paths:
       responses:
         '200':
           description: Success
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /Filter/getAllFilters:
     get:
       tags:
@@ -58,6 +119,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/JobFilter'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: No Content
   /Job:
     get:
       tags:
@@ -99,6 +174,18 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/JobRequestResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /Job/retrieveJobs:
     post:
       tags:
@@ -106,6 +193,18 @@ paths:
       responses:
         '200':
           description: Success
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /Job/hide:
     post:
       tags:
@@ -153,6 +252,18 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/JobMoveResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /Job/apply:
     post:
       tags:
@@ -200,6 +311,18 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/JobMoveResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /JobRequest:
     get:
       tags:
@@ -223,6 +346,20 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/JobRequest'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '204':
+          description: No Content
   /insertRequest:
     post:
       tags:
@@ -236,6 +373,18 @@ paths:
       responses:
         '200':
           description: Success
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
   /ServiceState:
     get:
       tags:
@@ -253,6 +402,18 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/SyncState'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
 components:
   schemas:
     Job:
@@ -265,6 +426,9 @@ components:
           type: string
           nullable: true
         content:
+          type: string
+          nullable: true
+        title:
           type: string
           nullable: true
         postedDate:
@@ -336,6 +500,26 @@ components:
           type: integer
           format: int32
       additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }
     SyncState:
       type: object
       properties:
@@ -365,4 +549,20 @@ components:
         autoIgnoredCount:
           type: integer
           format: int32
+      additionalProperties: false
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        profilePictureUrl:
+          type: string
+          nullable: true
       additionalProperties: false

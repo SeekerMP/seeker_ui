@@ -1,15 +1,15 @@
-# .JobRequestApi
+# .AuthorizationApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**insertRequestPost**](JobRequestApi.md#insertRequestPost) | **POST** /insertRequest | 
-[**jobRequestGet**](JobRequestApi.md#jobRequestGet) | **GET** /JobRequest | 
+[**authorizationGoogleSignInPost**](AuthorizationApi.md#authorizationGoogleSignInPost) | **POST** /Authorization/googleSignIn | 
+[**authorizationLogoutPost**](AuthorizationApi.md#authorizationLogoutPost) | **POST** /Authorization/logout | 
 
 
-# **insertRequestPost**
-> void insertRequestPost()
+# **authorizationGoogleSignInPost**
+> void authorizationGoogleSignInPost()
 
 
 ### Example
@@ -20,14 +20,14 @@ import {  } from '';
 import * as fs from 'fs';
 
 const configuration = .createConfiguration();
-const apiInstance = new .JobRequestApi(configuration);
+const apiInstance = new .AuthorizationApi(configuration);
 
-let body:.JobRequestApiInsertRequestPostRequest = {
+let body:.AuthorizationApiAuthorizationGoogleSignInPostRequest = {
   // string (optional)
-  request: "request_example",
+  token: "token_example",
 };
 
-apiInstance.insertRequestPost(body).then((data:any) => {
+apiInstance.authorizationGoogleSignInPost(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -37,7 +37,7 @@ apiInstance.insertRequestPost(body).then((data:any) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **request** | [**string**] |  | (optional) defaults to undefined
+ **token** | [**string**] |  | (optional) defaults to undefined
 
 
 ### Return type
@@ -51,19 +51,18 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
+ - **Accept**: Not defined
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
-**401** | Unauthorized |  -  |
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **jobRequestGet**
-> void | Array<JobRequest> jobRequestGet()
+# **authorizationLogoutPost**
+> void authorizationLogoutPost()
 
 
 ### Example
@@ -74,11 +73,11 @@ import {  } from '';
 import * as fs from 'fs';
 
 const configuration = .createConfiguration();
-const apiInstance = new .JobRequestApi(configuration);
+const apiInstance = new .AuthorizationApi(configuration);
 
 let body:any = {};
 
-apiInstance.jobRequestGet(body).then((data:any) => {
+apiInstance.authorizationLogoutPost(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -90,7 +89,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**void | Array<JobRequest>**
+**void**
 
 ### Authorization
 
@@ -99,15 +98,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json, text/json
+ - **Accept**: Not defined
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Success |  -  |
-**401** | Unauthorized |  -  |
-**204** | No Content |  -  |
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 

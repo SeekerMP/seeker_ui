@@ -10,6 +10,7 @@ import {SecurityAuthentication} from '../auth/auth';
 
 import { JobMoveResponse } from '../models/JobMoveResponse';
 import { JobRequestResponse } from '../models/JobRequestResponse';
+import { ProblemDetails } from '../models/ProblemDetails';
 
 /**
  * no description
@@ -201,6 +202,13 @@ export class JobApiResponseProcessor {
             ) as JobMoveResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            const body: ProblemDetails = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ProblemDetails", ""
+            ) as ProblemDetails;
+            throw new ApiException<ProblemDetails>(response.httpStatusCode, "Unauthorized", body, response.headers);
+        }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
@@ -229,6 +237,13 @@ export class JobApiResponseProcessor {
                 "JobRequestResponse", ""
             ) as JobRequestResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            const body: ProblemDetails = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ProblemDetails", ""
+            ) as ProblemDetails;
+            throw new ApiException<ProblemDetails>(response.httpStatusCode, "Unauthorized", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
@@ -259,6 +274,13 @@ export class JobApiResponseProcessor {
             ) as JobMoveResponse;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            const body: ProblemDetails = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ProblemDetails", ""
+            ) as ProblemDetails;
+            throw new ApiException<ProblemDetails>(response.httpStatusCode, "Unauthorized", body, response.headers);
+        }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml
         if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
@@ -283,6 +305,13 @@ export class JobApiResponseProcessor {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, undefined);
+        }
+        if (isCodeInRange("401", response.httpStatusCode)) {
+            const body: ProblemDetails = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "ProblemDetails", ""
+            ) as ProblemDetails;
+            throw new ApiException<ProblemDetails>(response.httpStatusCode, "Unauthorized", body, response.headers);
         }
 
         // Work around for missing responses in specification, e.g. for petstore.yaml

@@ -7,7 +7,128 @@ import { JobFilter } from '../models/JobFilter';
 import { JobMoveResponse } from '../models/JobMoveResponse';
 import { JobRequest } from '../models/JobRequest';
 import { JobRequestResponse } from '../models/JobRequestResponse';
+import { ProblemDetails } from '../models/ProblemDetails';
 import { SyncState } from '../models/SyncState';
+import { User } from '../models/User';
+
+import { AccountApiRequestFactory, AccountApiResponseProcessor} from "../apis/AccountApi";
+export class ObservableAccountApi {
+    private requestFactory: AccountApiRequestFactory;
+    private responseProcessor: AccountApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: AccountApiRequestFactory,
+        responseProcessor?: AccountApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new AccountApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new AccountApiResponseProcessor();
+    }
+
+    /**
+     */
+    public accountUserInfoGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<User>> {
+        const requestContextPromise = this.requestFactory.accountUserInfoGet(_options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.accountUserInfoGetWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public accountUserInfoGet(_options?: Configuration): Observable<User> {
+        return this.accountUserInfoGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<User>) => apiResponse.data));
+    }
+
+}
+
+import { AuthorizationApiRequestFactory, AuthorizationApiResponseProcessor} from "../apis/AuthorizationApi";
+export class ObservableAuthorizationApi {
+    private requestFactory: AuthorizationApiRequestFactory;
+    private responseProcessor: AuthorizationApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: AuthorizationApiRequestFactory,
+        responseProcessor?: AuthorizationApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new AuthorizationApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new AuthorizationApiResponseProcessor();
+    }
+
+    /**
+     * @param token 
+     */
+    public authorizationGoogleSignInPostWithHttpInfo(token?: string, _options?: Configuration): Observable<HttpInfo<void>> {
+        const requestContextPromise = this.requestFactory.authorizationGoogleSignInPost(token, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.authorizationGoogleSignInPostWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * @param token 
+     */
+    public authorizationGoogleSignInPost(token?: string, _options?: Configuration): Observable<void> {
+        return this.authorizationGoogleSignInPostWithHttpInfo(token, _options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    }
+
+    /**
+     */
+    public authorizationLogoutPostWithHttpInfo(_options?: Configuration): Observable<HttpInfo<void>> {
+        const requestContextPromise = this.requestFactory.authorizationLogoutPost(_options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.authorizationLogoutPostWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     */
+    public authorizationLogoutPost(_options?: Configuration): Observable<void> {
+        return this.authorizationLogoutPostWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<void>) => apiResponse.data));
+    }
+
+}
 
 import { FilterApiRequestFactory, FilterApiResponseProcessor} from "../apis/FilterApi";
 export class ObservableFilterApi {
@@ -60,7 +181,7 @@ export class ObservableFilterApi {
 
     /**
      */
-    public filterGetAllFiltersGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<Array<JobFilter>>> {
+    public filterGetAllFiltersGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<Array<JobFilter> | void>> {
         const requestContextPromise = this.requestFactory.filterGetAllFiltersGet(_options);
 
         // build promise chain
@@ -81,8 +202,8 @@ export class ObservableFilterApi {
 
     /**
      */
-    public filterGetAllFiltersGet(_options?: Configuration): Observable<Array<JobFilter>> {
-        return this.filterGetAllFiltersGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<JobFilter>>) => apiResponse.data));
+    public filterGetAllFiltersGet(_options?: Configuration): Observable<Array<JobFilter> | void> {
+        return this.filterGetAllFiltersGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<JobFilter> | void>) => apiResponse.data));
     }
 
 }
@@ -282,7 +403,7 @@ export class ObservableJobRequestApi {
 
     /**
      */
-    public jobRequestGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<Array<JobRequest>>> {
+    public jobRequestGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<void | Array<JobRequest>>> {
         const requestContextPromise = this.requestFactory.jobRequestGet(_options);
 
         // build promise chain
@@ -303,8 +424,8 @@ export class ObservableJobRequestApi {
 
     /**
      */
-    public jobRequestGet(_options?: Configuration): Observable<Array<JobRequest>> {
-        return this.jobRequestGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<JobRequest>>) => apiResponse.data));
+    public jobRequestGet(_options?: Configuration): Observable<void | Array<JobRequest>> {
+        return this.jobRequestGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<void | Array<JobRequest>>) => apiResponse.data));
     }
 
 }

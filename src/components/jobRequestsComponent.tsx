@@ -11,7 +11,7 @@ export const JobRequestsComponent = () => {
 
     const fetchJobRequests = () => {
         api.jobRequestGet().then(requestList => {
-            setJobRequests(requestList);
+            setJobRequests(requestList ?? []);
         });
     }
 

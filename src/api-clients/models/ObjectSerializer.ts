@@ -3,14 +3,18 @@ export * from '../models/JobFilter';
 export * from '../models/JobMoveResponse';
 export * from '../models/JobRequest';
 export * from '../models/JobRequestResponse';
+export * from '../models/ProblemDetails';
 export * from '../models/SyncState';
+export * from '../models/User';
 
-import { Job    , JobFilterEnum   } from '../models/Job';
+import { Job     , JobFilterEnum   } from '../models/Job';
 import { JobFilter  , JobFilterTypeEnum  , JobFilterSubtypeEnum   } from '../models/JobFilter';
 import { JobMoveResponse } from '../models/JobMoveResponse';
 import { JobRequest } from '../models/JobRequest';
 import { JobRequestResponse } from '../models/JobRequestResponse';
+import { ProblemDetails } from '../models/ProblemDetails';
 import { SyncState } from '../models/SyncState';
+import { User } from '../models/User';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -36,7 +40,9 @@ let typeMap: {[index: string]: any} = {
     "JobMoveResponse": JobMoveResponse,
     "JobRequest": JobRequest,
     "JobRequestResponse": JobRequestResponse,
+    "ProblemDetails": ProblemDetails,
     "SyncState": SyncState,
+    "User": User,
 }
 
 type MimeTypeDescriptor = {

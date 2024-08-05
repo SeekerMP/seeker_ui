@@ -1,14 +1,14 @@
-# .ServiceStateApi
+# .AccountApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**serviceStateGet**](ServiceStateApi.md#serviceStateGet) | **GET** /ServiceState | 
+[**accountUserInfoGet**](AccountApi.md#accountUserInfoGet) | **GET** /Account/userInfo | 
 
 
-# **serviceStateGet**
-> SyncState serviceStateGet()
+# **accountUserInfoGet**
+> User accountUserInfoGet()
 
 
 ### Example
@@ -19,11 +19,11 @@ import {  } from '';
 import * as fs from 'fs';
 
 const configuration = .createConfiguration();
-const apiInstance = new .ServiceStateApi(configuration);
+const apiInstance = new .AccountApi(configuration);
 
 let body:any = {};
 
-apiInstance.serviceStateGet(body).then((data:any) => {
+apiInstance.accountUserInfoGet(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -35,7 +35,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**SyncState**
+**User**
 
 ### Authorization
 

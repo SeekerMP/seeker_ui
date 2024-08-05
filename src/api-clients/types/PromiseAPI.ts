@@ -6,7 +6,91 @@ import { JobFilter } from '../models/JobFilter';
 import { JobMoveResponse } from '../models/JobMoveResponse';
 import { JobRequest } from '../models/JobRequest';
 import { JobRequestResponse } from '../models/JobRequestResponse';
+import { ProblemDetails } from '../models/ProblemDetails';
 import { SyncState } from '../models/SyncState';
+import { User } from '../models/User';
+import { ObservableAccountApi } from './ObservableAPI';
+
+import { AccountApiRequestFactory, AccountApiResponseProcessor} from "../apis/AccountApi";
+export class PromiseAccountApi {
+    private api: ObservableAccountApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: AccountApiRequestFactory,
+        responseProcessor?: AccountApiResponseProcessor
+    ) {
+        this.api = new ObservableAccountApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     */
+    public accountUserInfoGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<User>> {
+        const result = this.api.accountUserInfoGetWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public accountUserInfoGet(_options?: Configuration): Promise<User> {
+        const result = this.api.accountUserInfoGet(_options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableAuthorizationApi } from './ObservableAPI';
+
+import { AuthorizationApiRequestFactory, AuthorizationApiResponseProcessor} from "../apis/AuthorizationApi";
+export class PromiseAuthorizationApi {
+    private api: ObservableAuthorizationApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: AuthorizationApiRequestFactory,
+        responseProcessor?: AuthorizationApiResponseProcessor
+    ) {
+        this.api = new ObservableAuthorizationApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param token 
+     */
+    public authorizationGoogleSignInPostWithHttpInfo(token?: string, _options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.authorizationGoogleSignInPostWithHttpInfo(token, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * @param token 
+     */
+    public authorizationGoogleSignInPost(token?: string, _options?: Configuration): Promise<void> {
+        const result = this.api.authorizationGoogleSignInPost(token, _options);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public authorizationLogoutPostWithHttpInfo(_options?: Configuration): Promise<HttpInfo<void>> {
+        const result = this.api.authorizationLogoutPostWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     */
+    public authorizationLogoutPost(_options?: Configuration): Promise<void> {
+        const result = this.api.authorizationLogoutPost(_options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
 import { ObservableFilterApi } from './ObservableAPI';
 
 import { FilterApiRequestFactory, FilterApiResponseProcessor} from "../apis/FilterApi";
@@ -43,14 +127,14 @@ export class PromiseFilterApi {
 
     /**
      */
-    public filterGetAllFiltersGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<JobFilter>>> {
+    public filterGetAllFiltersGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<JobFilter> | void>> {
         const result = this.api.filterGetAllFiltersGetWithHttpInfo(_options);
         return result.toPromise();
     }
 
     /**
      */
-    public filterGetAllFiltersGet(_options?: Configuration): Promise<Array<JobFilter>> {
+    public filterGetAllFiltersGet(_options?: Configuration): Promise<Array<JobFilter> | void> {
         const result = this.api.filterGetAllFiltersGet(_options);
         return result.toPromise();
     }
@@ -189,14 +273,14 @@ export class PromiseJobRequestApi {
 
     /**
      */
-    public jobRequestGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<JobRequest>>> {
+    public jobRequestGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<void | Array<JobRequest>>> {
         const result = this.api.jobRequestGetWithHttpInfo(_options);
         return result.toPromise();
     }
 
     /**
      */
-    public jobRequestGet(_options?: Configuration): Promise<Array<JobRequest>> {
+    public jobRequestGet(_options?: Configuration): Promise<void | Array<JobRequest>> {
         const result = this.api.jobRequestGet(_options);
         return result.toPromise();
     }

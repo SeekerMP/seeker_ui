@@ -39,6 +39,9 @@ export const SyncAndFiltersPage = () => {
 
     useEffect(() => {
         filterApiClient.filterGetAllFiltersGet().then(filters => {
+            if (!filters)
+                return;
+
             const imFilters: JobFilter[] = [];
             const igFilters: JobFilter[] = [];
 

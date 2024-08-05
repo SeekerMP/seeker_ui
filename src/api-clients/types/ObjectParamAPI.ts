@@ -6,7 +6,90 @@ import { JobFilter } from '../models/JobFilter';
 import { JobMoveResponse } from '../models/JobMoveResponse';
 import { JobRequest } from '../models/JobRequest';
 import { JobRequestResponse } from '../models/JobRequestResponse';
+import { ProblemDetails } from '../models/ProblemDetails';
 import { SyncState } from '../models/SyncState';
+import { User } from '../models/User';
+
+import { ObservableAccountApi } from "./ObservableAPI";
+import { AccountApiRequestFactory, AccountApiResponseProcessor} from "../apis/AccountApi";
+
+export interface AccountApiAccountUserInfoGetRequest {
+}
+
+export class ObjectAccountApi {
+    private api: ObservableAccountApi
+
+    public constructor(configuration: Configuration, requestFactory?: AccountApiRequestFactory, responseProcessor?: AccountApiResponseProcessor) {
+        this.api = new ObservableAccountApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param param the request object
+     */
+    public accountUserInfoGetWithHttpInfo(param: AccountApiAccountUserInfoGetRequest = {}, options?: Configuration): Promise<HttpInfo<User>> {
+        return this.api.accountUserInfoGetWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public accountUserInfoGet(param: AccountApiAccountUserInfoGetRequest = {}, options?: Configuration): Promise<User> {
+        return this.api.accountUserInfoGet( options).toPromise();
+    }
+
+}
+
+import { ObservableAuthorizationApi } from "./ObservableAPI";
+import { AuthorizationApiRequestFactory, AuthorizationApiResponseProcessor} from "../apis/AuthorizationApi";
+
+export interface AuthorizationApiAuthorizationGoogleSignInPostRequest {
+    /**
+     * 
+     * @type string
+     * @memberof AuthorizationApiauthorizationGoogleSignInPost
+     */
+    token?: string
+}
+
+export interface AuthorizationApiAuthorizationLogoutPostRequest {
+}
+
+export class ObjectAuthorizationApi {
+    private api: ObservableAuthorizationApi
+
+    public constructor(configuration: Configuration, requestFactory?: AuthorizationApiRequestFactory, responseProcessor?: AuthorizationApiResponseProcessor) {
+        this.api = new ObservableAuthorizationApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * @param param the request object
+     */
+    public authorizationGoogleSignInPostWithHttpInfo(param: AuthorizationApiAuthorizationGoogleSignInPostRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.authorizationGoogleSignInPostWithHttpInfo(param.token,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public authorizationGoogleSignInPost(param: AuthorizationApiAuthorizationGoogleSignInPostRequest = {}, options?: Configuration): Promise<void> {
+        return this.api.authorizationGoogleSignInPost(param.token,  options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public authorizationLogoutPostWithHttpInfo(param: AuthorizationApiAuthorizationLogoutPostRequest = {}, options?: Configuration): Promise<HttpInfo<void>> {
+        return this.api.authorizationLogoutPostWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * @param param the request object
+     */
+    public authorizationLogoutPost(param: AuthorizationApiAuthorizationLogoutPostRequest = {}, options?: Configuration): Promise<void> {
+        return this.api.authorizationLogoutPost( options).toPromise();
+    }
+
+}
 
 import { ObservableFilterApi } from "./ObservableAPI";
 import { FilterApiRequestFactory, FilterApiResponseProcessor} from "../apis/FilterApi";
@@ -59,14 +142,14 @@ export class ObjectFilterApi {
     /**
      * @param param the request object
      */
-    public filterGetAllFiltersGetWithHttpInfo(param: FilterApiFilterGetAllFiltersGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<JobFilter>>> {
+    public filterGetAllFiltersGetWithHttpInfo(param: FilterApiFilterGetAllFiltersGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<JobFilter> | void>> {
         return this.api.filterGetAllFiltersGetWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public filterGetAllFiltersGet(param: FilterApiFilterGetAllFiltersGetRequest = {}, options?: Configuration): Promise<Array<JobFilter>> {
+    public filterGetAllFiltersGet(param: FilterApiFilterGetAllFiltersGetRequest = {}, options?: Configuration): Promise<Array<JobFilter> | void> {
         return this.api.filterGetAllFiltersGet( options).toPromise();
     }
 
@@ -257,14 +340,14 @@ export class ObjectJobRequestApi {
     /**
      * @param param the request object
      */
-    public jobRequestGetWithHttpInfo(param: JobRequestApiJobRequestGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<JobRequest>>> {
+    public jobRequestGetWithHttpInfo(param: JobRequestApiJobRequestGetRequest = {}, options?: Configuration): Promise<HttpInfo<void | Array<JobRequest>>> {
         return this.api.jobRequestGetWithHttpInfo( options).toPromise();
     }
 
     /**
      * @param param the request object
      */
-    public jobRequestGet(param: JobRequestApiJobRequestGetRequest = {}, options?: Configuration): Promise<Array<JobRequest>> {
+    public jobRequestGet(param: JobRequestApiJobRequestGetRequest = {}, options?: Configuration): Promise<void | Array<JobRequest>> {
         return this.api.jobRequestGet( options).toPromise();
     }
 

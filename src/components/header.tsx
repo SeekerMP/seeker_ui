@@ -1,11 +1,19 @@
 import './header.scss';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {AnimatePresence, motion} from "framer-motion";
 import {Link, useLocation} from "react-router-dom";
+import {useUser} from "../data/providers/user";
+import {Button} from "@mui/material";
 
 export const Header = () => {
     const [showLeftPanel, setShowLeftPanel] = useState(false);
     const location = useLocation();
+
+    const { logout } = useUser();
+
+    useEffect(() => {
+        setShowLeftPanel(false);
+    }, [location]);
 
     const links = [{
         route: 'jobList',
@@ -38,18 +46,17 @@ export const Header = () => {
             </ul>
         </motion.div>
 
-    useEffect(() => {
-        setShowLeftPanel(false);
-    }, [location]);
-
     return (
         <div>
             <div className="header">
                 <button className="burger-button" onClick={() => setShowLeftPanel(!showLeftPanel)}>=</button>
-                <span className='title'>{links.find(x=>x.route === location.pathname.slice(1))?.title}</span>
+                <span className='title'>{links.find(x => x.route === location.pathname.slice(1))?.title}</span>
+                <Button variant='contained' onClick={ logout }>
+                    Logout
+                </Button>
             </div>
             <AnimatePresence>
-                { showLeftPanel && leftPanel }
+                {showLeftPanel && leftPanel}
             </AnimatePresence>
         </div>
     )

@@ -12,32 +12,19 @@
 
 import { HttpFile } from '../http/http';
 
-export class Job {
-    'id'?: number;
-    'preview'?: string | null;
-    'content'?: string | null;
+export class ProblemDetails {
+    'type'?: string | null;
     'title'?: string | null;
-    'postedDate'?: Date;
-    'filter'?: JobFilterEnum;
+    'status'?: number | null;
+    'detail'?: string | null;
+    'instance'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "id",
-            "baseName": "id",
-            "type": "number",
-            "format": "int32"
-        },
-        {
-            "name": "preview",
-            "baseName": "preview",
-            "type": "string",
-            "format": ""
-        },
-        {
-            "name": "content",
-            "baseName": "content",
+            "name": "type",
+            "baseName": "type",
             "type": "string",
             "format": ""
         },
@@ -48,32 +35,29 @@ export class Job {
             "format": ""
         },
         {
-            "name": "postedDate",
-            "baseName": "postedDate",
-            "type": "Date",
-            "format": "date-time"
+            "name": "status",
+            "baseName": "status",
+            "type": "number",
+            "format": "int32"
         },
         {
-            "name": "filter",
-            "baseName": "filter",
-            "type": "JobFilterEnum",
+            "name": "detail",
+            "baseName": "detail",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "instance",
+            "baseName": "instance",
+            "type": "string",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return Job.attributeTypeMap;
+        return ProblemDetails.attributeTypeMap;
     }
 
     public constructor() {
     }
-}
-
-
-export enum JobFilterEnum {
-    None = 'None',
-    Important = 'Important',
-    AutoIgnore = 'AutoIgnore',
-    Hidden = 'Hidden',
-    Applied = 'Applied'
 }
 
