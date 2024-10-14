@@ -7,26 +7,14 @@ import {SyncStateProgressContainer} from "./syncStateProgressContainer";
 
 export const SyncStateComponent = () => {
     const jobApiClient = new JobApi(configuration);
-    const serviceStateApiClient = new ServiceStateApi(configuration);
     const [syncInProgress, setSyncInProgress] = useState<boolean>(false);
     const [syncState, setSyncState] = useState<SyncState>(new SyncState());
 
     const updateAllRequests = () => {
-        jobApiClient.jobRetrieveJobsPost().then(_ => { watchSyncProgress() });
-    }
-
-    const watchSyncProgress = () => {
-        serviceStateApiClient.serviceStateGet().then((state) => {
-            setSyncInProgress(state.inProgress ?? false);
-            if (state.inProgress === true)
-                setTimeout(watchSyncProgress, 1 * 1000);
-
-            setSyncState(state);
-        })
+        jobApiClient.jobRetrieveJobsPost();
     }
 
     useEffect(() => {
-        watchSyncProgress();
     }, []);
 
     return (
